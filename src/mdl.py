@@ -162,6 +162,11 @@ def mlp_sweep(td, variant, cfgs, budget, bits_list=(8, 4), patience=2, seed=0, k
     for cfg in cfgs:
         torch.manual_seed(seed + cfg)
         net = Net(td.vocab.rows, cfg)
+        h1 = CONFIGS[cfg][0]
+        used_params = net.n_params() - (td.vocab.rows - 1 - int(td.used_rows[1:].sum())) * h1
+        if best is not None and 0.25 * used_params >= best[0]["total_bytes"]:
+            # even at 4 bits and perfect zstd this model alone would exceed the best total
+            break
         steps, batch = steps_for(len(ids_t), cfg, budget)
         t0 = time.time()
         train(net, ids_t, allowed_t, steps, batch=batch, seed=seed + cfg)

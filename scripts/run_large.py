@@ -148,6 +148,9 @@ def main():
         for cfg in [int(c) for c in args.cfgs.split(",")]:
             torch.manual_seed(cfg)
             net = Net(td.vocab.rows, cfg)
+            used_params = net.n_params() - (td.vocab.rows - 1 - int(td.used_rows[1:].sum())) * CONFIGS[cfg][0]
+            if best is not None and 0.25 * used_params >= best[0]["est_total_bytes"]:
+                break
             steps, batch = args.budget, 4096
             ts = time.time()
             train(net, ids_t, allowed_t, steps, batch=batch, seed=cfg)
