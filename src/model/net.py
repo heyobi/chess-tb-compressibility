@@ -115,7 +115,10 @@ def train(net, ids, allowed, steps, batch=4096, lr=3e-3, seed=0, log=None):
 class QNet:
     """Quantised network (integer tensors stored as float32 for BLAS)."""
 
-    def __init__(self, cfg, bits, rows, sE, Eq, b0q, sA, sW, Wq, bq):
+    def __init__(self, cfg, bits, rows, sE, Eq, b0q, sA, sW, Wq, bq, ver=2):
+        # ver 1: float64 re-quantisation; ver 2: float32 (faster). Both are
+        # exact IEEE operations, hence deterministic; the version is stored.
+        self.ver = ver
         self.cfg, self.bits, self.rows = cfg, bits, rows
         self.sE, self.Eq, self.b0q, self.sA, self.sW, self.Wq, self.bq = sE, Eq, b0q, sA, sW, Wq, bq
         self._prep()
@@ -132,10 +135,15 @@ class QNet:
         self.M = [torch.from_numpy(sE / sA[0])]
         for l in range(len(self.Wq) - 1):
             self.M.append(torch.from_numpy(self.sW[l].astype(np.float64) * sA[l] / sA[l + 1]))
+        if self.ver >= 2:
+            self.M = [m.float() for m in self.M]
 
-    @staticmethod
-    def _requant(acc, M):
-        return torch.clamp(torch.floor(acc.double() * M + 0.5), 0, 127).float()
+    def _requant(self, acc, M):
+        if self.ver == 1:
+            return torch.clamp(torch.floor(acc.double() * M + 0.5), 0, 127).float()
+        # acc is an exact integer < 2^24 in float32; one rounded multiply, one
+        # rounded add, floor, clamp -- all in place
+        return acc.mul_(M).add_(0.5).floor_().clamp_(0, 127)
 
     @torch.no_grad()
     def logits(self, ids):
@@ -149,7 +157,7 @@ class QNet:
         return acc
 
     @torch.no_grad()
-    def predict(self, ids, chunk=1 << 18):
+    def predict(self, ids, chunk=1 << 16):
         """returns (first choice, second choice) uint8 arrays."""
         p1, p2 = [], []
         for s in range(0, len(ids), chunk):
@@ -164,7 +172,7 @@ class QNet:
     # ---- serialisation -------------------------------------------------
     def serialize(self):
         buf = io.BytesIO()
-        buf.write(struct.pack("<BBB", 1, self.cfg, self.bits))
+        buf.write(struct.pack("<BBB", self.ver, self.cfg, self.bits))
         buf.write(self.sE.astype("<f4").tobytes())
         buf.write(self.sA.astype("<f4").tobytes())
         for s in self.sW:
@@ -181,7 +189,7 @@ class QNet:
     def deserialize(blob, rows):
         raw = zstandard.ZstdDecompressor().decompress(blob)
         ver, cfg, bits = struct.unpack_from("<BBB", raw, 0)
-        assert ver == 1
+        assert ver in (1, 2)
         pos = 3
         h1, hidden = CONFIGS[cfg]
         dims = [h1] + hidden + [NCLS]
@@ -206,7 +214,7 @@ class QNet:
         b0q = take(h1, "<i4")
         bq = [take(o, "<i4") for o in dims[1:]]
         assert pos == len(raw)
-        return QNet(cfg, bits, rows, sE, Eq, b0q, sA, sW, ws[1:], bq)
+        return QNet(cfg, bits, rows, sE, Eq, b0q, sA, sW, ws[1:], bq, ver=ver)
 
 
 def pack_int(w, bits):

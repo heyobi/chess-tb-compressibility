@@ -330,14 +330,15 @@ def large_tree_sweep(td, v, leaves_list, log_name=""):
         if worse >= 3 or ne == 0 or len(blob) >= best[0]["est_total_bytes"] or rr["leaves"] < L // 2:
             break
     rr, blob = best
-    pred = full_predict(blob)
-    cont, nexc, exb = encode_container(blob, pred, pred * 5 + pred, td.y, td.bc, v)
-    del pred
+    pred = full_predict(blob)  # from the deserialised tree
+    ctx = pred * 5 + pred
+    cont, nexc, exb = encode_container(blob, pred, ctx, td.y, td.bc, v)
 
-    def pf(b):
-        p = full_predict(b)
-        return p, p * 5 + p
+    def pf(b):  # single-pass verification: container parsed from bytes
+        assert b == blob
+        return pred, ctx
     bad = int((decode_container(cont, pf, td.bc, v) != td.y).sum())
+    del pred, ctx
     res = dict(model="tree", leaves=rr["leaves"], model_bytes=len(blob), n_exceptions=int(nexc),
                exception_bytes=exb, total_bytes=len(cont), verified_mismatches=bad, sha=sha(cont),
                est_total_bytes=rr["est_total_bytes"])

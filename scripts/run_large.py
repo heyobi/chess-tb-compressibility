@@ -50,6 +50,48 @@ def tree_full_predict(td, ft):
     return out
 
 
+def mlp_sweep_large(td, v, args, calib):
+    ids_t, allowed_t = td.train_tensors(v)
+    ev = torch.from_numpy(td.eval_ids.astype(np.int32))
+    sweep, best, worse = [], None, 0
+    for cfg in [int(c) for c in args.cfgs.split(",")]:
+        torch.manual_seed(cfg)
+        net = Net(td.vocab.rows, cfg)
+        used_params = net.n_params() - (td.vocab.rows - 1 - int(td.used_rows[1:].sum())) * CONFIGS[cfg][0]
+        if best is not None and 0.25 * used_params >= best[0]["est_total_bytes"]:
+            break
+        steps, batch = args.budget, 4096
+        ts = time.time()
+        train(net, ids_t, allowed_t, steps, batch=batch, seed=cfg)
+        ttr = time.time() - ts
+        improved = False
+        for bits in (8, 4):
+            qnet = net
+            if bits == 4:
+                qnet = copy.deepcopy(net)
+                qnet.qat_bits = 4
+                train(qnet, ids_t, allowed_t, steps // 4, batch=batch, lr=5e-4, seed=cfg + 100)
+                qnet.qat_bits = None
+            q = quantize(qnet, calib, bits, used_rows=td.used_rows)
+            blob = q.serialize()
+            p1, p2 = q.predict(ev)
+            ne, eb, rate = est_bytes(td, p1, p1 * 5 + p2, v)
+            total = len(blob) + eb + 8
+            rr = dict(model="mlp", cfg=cfg, arch=str(CONFIGS[cfg]), bits=bits, n_params=net.n_params(),
+                      model_bytes=len(blob), est_n_exceptions=ne, est_exception_bytes=eb, est_total_bytes=total,
+                      error_rate=rate, steps=steps, train_s=round(ttr, 1), estimated=True)
+            sweep.append(rr)
+            mdl.log(f"  [{args.table}/{v}] mlp cfg{cfg} {bits}b model={len(blob)} est_exc={ne} "
+                    f"est_total={total} train={ttr:.0f}s")
+            if best is None or total < best[0]["est_total_bytes"]:
+                best, improved = (rr, blob), True
+        worse = 0 if improved else worse + 1
+        if worse >= 2 or min(x["model_bytes"] for x in sweep[-2:]) >= best[0]["est_total_bytes"]:
+            break
+    del ids_t, allowed_t
+    return sweep, best
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("table")
@@ -118,50 +160,30 @@ def main():
         open(os.path.join(encdir, f"tree_{v}.bin"), "wb").write(cont)
 
         # ---- MLP: sweep on samples, exact on the best ----
-        ids_t, allowed_t = td.train_tensors(v)
-        ev = torch.from_numpy(td.eval_ids.astype(np.int32))
-        sweep, best, worse = [], None, 0
-        for cfg in [int(c) for c in args.cfgs.split(",")]:
-            torch.manual_seed(cfg)
-            net = Net(td.vocab.rows, cfg)
-            used_params = net.n_params() - (td.vocab.rows - 1 - int(td.used_rows[1:].sum())) * CONFIGS[cfg][0]
-            if best is not None and 0.25 * used_params >= best[0]["est_total_bytes"]:
-                break
-            steps, batch = args.budget, 4096
-            ts = time.time()
-            train(net, ids_t, allowed_t, steps, batch=batch, seed=cfg)
-            ttr = time.time() - ts
-            improved = False
-            for bits in (8, 4):
-                qnet = net
-                if bits == 4:
-                    qnet = copy.deepcopy(net)
-                    qnet.qat_bits = 4
-                    train(qnet, ids_t, allowed_t, steps // 4, batch=batch, lr=5e-4, seed=cfg + 100)
-                    qnet.qat_bits = None
-                q = quantize(qnet, calib, bits, used_rows=td.used_rows)
-                blob = q.serialize()
-                p1, p2 = q.predict(ev)
-                ne, eb, rate = est_bytes(td, p1, p1 * 5 + p2, v)
-                total = len(blob) + eb + 8
-                rr = dict(model="mlp", cfg=cfg, arch=str(CONFIGS[cfg]), bits=bits, n_params=net.n_params(),
-                          model_bytes=len(blob), est_n_exceptions=ne, est_exception_bytes=eb, est_total_bytes=total,
-                          error_rate=rate, steps=steps, train_s=round(ttr, 1), estimated=True)
-                sweep.append(rr)
-                mdl.log(f"  [{args.table}/{v}] mlp cfg{cfg} {bits}b model={len(blob)} est_exc={ne} "
-                        f"est_total={total} train={ttr:.0f}s")
-                if best is None or total < best[0]["est_total_bytes"]:
-                    best, improved = (rr, blob), True
-            worse = 0 if improved else worse + 1
-            if worse >= 2 or min(x["model_bytes"] for x in sweep[-2:]) >= best[0]["est_total_bytes"]:
-                break
-        del ids_t, allowed_t
+        ckpt = os.path.join(encdir, f"mlp_{v}_sweep.json")
+        if os.path.exists(ckpt):  # sweep already done before an interruption
+            ck = json.load(open(ckpt))
+            sweep, best = ck["sweep"], (ck["best"], open(os.path.join(encdir, f"mlp_{v}_model.bin"), "rb").read())
+            mdl.log(f"  [{args.table}/{v}] mlp sweep resumed from checkpoint")
+        else:
+            sweep, best = mlp_sweep_large(td, v, args, calib)
+            open(os.path.join(encdir, f"mlp_{v}_model.bin"), "wb").write(best[1])
+            json.dump(dict(sweep=sweep, best=best[0]), open(ckpt, "w"))
         rr, blob = best
         q = QNet.deserialize(blob, td.vocab.rows)
         p1, p2 = td.predict(q)
-        cont, nexc, exb = mdl.encode_container(blob, p1, p1 * 5 + p2, td.y, td.bc, v)
-        del p1, p2
-        bad = mdl.verify_mlp(td, cont, v)
+        ctx = p1 * 5 + p2
+        del p2
+        cont, nexc, exb = mdl.encode_container(blob, p1, ctx, td.y, td.bc, v)
+        # verification: the predictions above come from the model deserialised
+        # from `blob`; the container is parsed from its bytes, the model part
+        # must be byte-identical to `blob`, the exceptions are range-decoded
+        # and applied, and every position is compared with Syzygy.
+        def pf(model_bytes):
+            assert model_bytes == blob
+            return p1, ctx
+        bad = int((mdl.decode_container(cont, pf, td.bc, v) != td.y).sum())
+        del p1, ctx
         vr["mlp_sweep"] = sweep
         vr["mlp"] = dict(model="mlp", cfg=rr["cfg"], arch=rr["arch"], bits=rr["bits"], n_params=rr["n_params"],
                          model_bytes=len(blob), n_exceptions=int(nexc), exception_bytes=exb, total_bytes=len(cont),
