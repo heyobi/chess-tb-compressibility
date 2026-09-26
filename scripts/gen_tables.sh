@@ -31,22 +31,26 @@ cd "$TBDIR"
 awk -F'[.:]' '{print $1}' "$B/../checksums/wdl345.txt" \
   | awk -v M="$MAXPCS" '{n=length($0)-1; t=$0; p=gsub(/P/,"P",t); if(n<=M) print n, p, $0}' \
   | sort -n -k1,1 -k2,2 -k3,3 | awk '{print $3}' > tables.lst
+# ONLY="T1 T2 ..." restricts generation to these tables (they must be listed in
+# dependency order; every sub-table reachable by capture/promotion must exist).
+if [ -n "${ONLY:-}" ]; then printf "%s\n" $ONLY > gen.lst; else cp tables.lst gen.lst; fi
 
 while read -r t; do
   if [ -f "$t.rtbw" ] && [ -f "$t.rtbz" ]; then continue; fi
   if [[ "$t" == *P* ]]; then gen=rtbgenp; else gen=rtbgen; fi
   echo "[gen] $t"
   "$B/$gen" -t "$THREADS" "$t" > /dev/null
-done < tables.lst
+done < gen.lst
 
 # Verify embedded checksums equal the official ones.
 fail=0
+ls *.rtbw | sed 's/.rtbw$//' > have.lst
 while read -r t; do
   got=$("$B/tbcheck" --print "$t.rtbw" | awk '{print $2}')
   want=$(grep "^$t.rtbw:" "$B/../checksums/wdl345.txt" | awk '{print $2}')
   if [ "$got" != "$want" ]; then echo "CHECKSUM MISMATCH $t $got $want"; fail=1; fi
-done < tables.lst
+done < have.lst
 # Also verify each file's content against its own embedded checksum.
-"$B/tbcheck" -t "$THREADS" $(sed 's/$/.rtbw/' tables.lst) | grep -v "OK!" || true
-[ $fail = 0 ] && echo "All $(wc -l < tables.lst) WDL tables match official Syzygy checksums."
+"$B/tbcheck" -t "$THREADS" $(sed 's/$/.rtbw/' have.lst) | grep -v "OK!" || true
+[ $fail = 0 ] && echo "All $(wc -l < have.lst) WDL tables match official Syzygy checksums."
 exit $fail

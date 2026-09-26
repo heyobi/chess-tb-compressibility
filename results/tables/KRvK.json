@@ -1,0 +1,202 @@
+{
+ "table": "KRvK",
+ "classes": 5,
+ "no_movegen": false,
+ "pieces": 3,
+ "pawnful": false,
+ "symmetric": false,
+ "n_positions": 50015,
+ "raw_size": 81920,
+ "syzygy_rtbw_bytes": 208,
+ "label_counts": [
+  25260,
+  0,
+  2796,
+  0,
+  21959
+ ],
+ "capture_resolvable": 2787,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 375,
+    "xz9e": 464
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 24755,
+    "exception_bytes": 1443,
+    "total_bytes": 1445,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "6472081b57b9e5ba"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 5,
+     "model_bytes": 28,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 35,
+     "fit_s": 0.0
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 5,
+    "model_bytes": 28,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 35,
+    "fit_s": 0.0,
+    "verified_mismatches": 0,
+    "sha": "db171081fa58dbff"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 989,
+     "n_params_used": 749,
+     "model_bytes": 785,
+     "n_exceptions": 1,
+     "exception_bytes": 8,
+     "total_bytes": 795,
+     "steps": 7326,
+     "train_s": 20.3,
+     "eval_s": 0.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 989,
+     "n_params_used": 749,
+     "model_bytes": 367,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 375,
+     "steps": 7326,
+     "train_s": 20.3,
+     "eval_s": 4.9
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 989,
+    "n_params_used": 749,
+    "model_bytes": 367,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 375,
+    "steps": 7326,
+    "train_s": 20.3,
+    "eval_s": 4.9,
+    "verified_mismatches": 0,
+    "sha": "4e7a309ab7ebe5fe"
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 46,
+    "xz9e": 160
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 21968,
+    "exception_bytes": 593,
+    "total_bytes": 595,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "786a1eccdbe794d0"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 31,
+     "fit_s": 0.0
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 4,
+    "model_bytes": 24,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 31,
+    "fit_s": 0.0,
+    "verified_mismatches": 0,
+    "sha": "daec83ff58dd94bc"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 989,
+     "n_params_used": 749,
+     "model_bytes": 809,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 817,
+     "steps": 7326,
+     "train_s": 18.7,
+     "eval_s": 0.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 989,
+     "n_params_used": 749,
+     "model_bytes": 392,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 400,
+     "steps": 7326,
+     "train_s": 18.7,
+     "eval_s": 5.3
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 989,
+    "n_params_used": 749,
+    "model_bytes": 392,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 400,
+    "steps": 7326,
+    "train_s": 18.7,
+    "eval_s": 5.3,
+    "verified_mismatches": 0,
+    "sha": "7f5d4f681d87bacb"
+   }
+  }
+ },
+ "seconds": 49.6
+}
