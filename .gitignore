@@ -1,0 +1,16 @@
+# Tablebases and large intermediate data never go into git
+*.rtbw
+*.rtbz
+data/
+tb/
+ext/
+venv/
+*.u8
+*.bits
+*.npy
+*.npz
+*.pt
+__pycache__/
+*.so
+*.o
+build/
