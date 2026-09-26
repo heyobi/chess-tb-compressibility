@@ -318,6 +318,185 @@
     "sha": "6120054bbd2d752f",
     "est_total_bytes": 606855
    }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 218288,
+    "xz9e": 172240
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 24382347,
+    "exception_bytes": 6461180,
+    "total_bytes": 6461182,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "27724c77b831a300"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 256,
+     "model_bytes": 497,
+     "est_n_exceptions": 2708488,
+     "est_exception_bytes": 980922,
+     "est_total_bytes": 981427,
+     "error_rate": 0.0201075,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 512,
+     "model_bytes": 953,
+     "est_n_exceptions": 2735967,
+     "est_exception_bytes": 1042682,
+     "est_total_bytes": 1043643,
+     "error_rate": 0.0203115,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 1024,
+     "model_bytes": 1821,
+     "est_n_exceptions": 2738863,
+     "est_exception_bytes": 1115285,
+     "est_total_bytes": 1117114,
+     "error_rate": 0.020333,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 2048,
+     "model_bytes": 3593,
+     "est_n_exceptions": 2619956,
+     "est_exception_bytes": 1167044,
+     "est_total_bytes": 1170645,
+     "error_rate": 0.01945025,
+     "estimated": true
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 256,
+    "model_bytes": 497,
+    "n_exceptions": 2684774,
+    "exception_bytes": 951577,
+    "total_bytes": 952076,
+    "verified_mismatches": 0,
+    "sha": "9f0389ed2b90a521",
+    "est_total_bytes": 981427
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 3253,
+     "model_bytes": 2421,
+     "est_n_exceptions": 425047,
+     "est_exception_bytes": 166288,
+     "est_total_bytes": 168717,
+     "error_rate": 0.0031555,
+     "steps": 12000,
+     "train_s": 106.7,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 3253,
+     "model_bytes": 1041,
+     "est_n_exceptions": 424778,
+     "est_exception_bytes": 165681,
+     "est_total_bytes": 166730,
+     "error_rate": 0.0031535,
+     "steps": 12000,
+     "train_s": 106.7,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 8,
+     "n_params": 6773,
+     "model_bytes": 5229,
+     "est_n_exceptions": 411240,
+     "est_exception_bytes": 177703,
+     "est_total_bytes": 182940,
+     "error_rate": 0.003053,
+     "steps": 12000,
+     "train_s": 117.2,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 4,
+     "n_params": 6773,
+     "model_bytes": 2372,
+     "est_n_exceptions": 423330,
+     "est_exception_bytes": 181475,
+     "est_total_bytes": 183855,
+     "error_rate": 0.00314275,
+     "steps": 12000,
+     "train_s": 117.2,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 8,
+     "n_params": 14053,
+     "model_bytes": 10861,
+     "est_n_exceptions": 402619,
+     "est_exception_bytes": 189692,
+     "est_total_bytes": 200561,
+     "error_rate": 0.002989,
+     "steps": 12000,
+     "train_s": 122.7,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 4,
+     "n_params": 14053,
+     "model_bytes": 4940,
+     "est_n_exceptions": 412924,
+     "est_exception_bytes": 193665,
+     "est_total_bytes": 198613,
+     "error_rate": 0.0030655,
+     "steps": 12000,
+     "train_s": 122.7,
+     "estimated": true
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 1,
+    "arch": "(8, [])",
+    "bits": 4,
+    "n_params": 3253,
+    "model_bytes": 1041,
+    "n_exceptions": 555797,
+    "exception_bytes": 195012,
+    "total_bytes": 196055,
+    "verified_mismatches": 0,
+    "sha": "145a5c4a28f78ff4",
+    "est_total_bytes": 166730
+   }
   }
- }
+ },
+ "seconds": 5549.7
 }
