@@ -48,6 +48,7 @@ class TableData:
             bcl = self.bc.astype(np.int16) + 2
             self.bc = np.where(bcl >= 0, m[np.clip(bcl, 0, 4)].astype(np.int16) - 2, -3).astype(np.int8)
         self.n = t.n
+        t.labels_raw = None  # y / bc hold everything needed; free memory
         self.full = (t.n <= FULL_LIMIT) if full is None else full
         rng = np.random.default_rng(seed)
         p = min(1.0, train_max / t.n)
@@ -123,7 +124,9 @@ class TableData:
 def decoded_values(pred, bc, variant):
     if variant == "a":
         return pred
-    return np.maximum(pred.astype(np.int16), bc.astype(np.int16) + 2).astype(np.uint8)
+    # best capture in label space; "no capture" (-3) -> 0, a no-op under max
+    bcl = np.clip(bc, -2, 2).astype(np.int8) + np.int8(2)
+    return np.maximum(pred, bcl.view(np.uint8))
 
 
 def encode_container(model_blob, pred, ctx, y, bc, variant):

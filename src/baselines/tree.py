@@ -39,7 +39,7 @@ def numeric_features(t, sq, stm, feat):
             cols += [dist, ek, ek - dist + (1 - tempo) + 8]  # "rule of the square" margin, shifted to be >= 0
     cols += [(feat & 1).astype(np.int16), ((feat >> 1) & 3).astype(np.int16), ((feat >> 3) & 15).astype(np.int16)]
     X = np.stack(cols, axis=1)
-    assert X.min() >= 0 and X.max() < 256
+    assert len(X) == 0 or (X.min() >= 0 and X.max() < 256)
     return X.astype(np.uint8)
 
 

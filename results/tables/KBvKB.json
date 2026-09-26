@@ -1,0 +1,307 @@
+{
+ "table": "KBvKB",
+ "classes": 5,
+ "no_movegen": false,
+ "pieces": 4,
+ "pawnful": false,
+ "symmetric": true,
+ "n_positions": 1479198,
+ "raw_size": 2621440,
+ "syzygy_rtbw_bytes": 1232,
+ "label_counts": [
+  14,
+  0,
+  1479132,
+  0,
+  52
+ ],
+ "capture_resolvable": 334267,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 190,
+    "xz9e": 452
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 66,
+    "exception_bytes": 107,
+    "total_bytes": 109,
+    "cls": 2,
+    "verified_mismatches": 0,
+    "sha": "69a8147696388b21"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 58,
+     "n_exceptions": 42,
+     "exception_bytes": 76,
+     "total_bytes": 135,
+     "fit_s": 2.5
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 82,
+     "n_exceptions": 22,
+     "exception_bytes": 48,
+     "total_bytes": 131,
+     "fit_s": 2.1
+    },
+    {
+     "model": "tree",
+     "leaves": 59,
+     "model_bytes": 145,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 153,
+     "fit_s": 1.9
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 32,
+    "model_bytes": 82,
+    "n_exceptions": 22,
+    "exception_bytes": 48,
+    "total_bytes": 131,
+    "fit_s": 2.1,
+    "verified_mismatches": 0,
+    "sha": "c3f467ee9dbcb98a"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1061,
+     "model_bytes": 1020,
+     "n_exceptions": 53,
+     "exception_bytes": 89,
+     "total_bytes": 1111,
+     "steps": 10833,
+     "train_s": 82.7,
+     "eval_s": 1.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1061,
+     "model_bytes": 447,
+     "n_exceptions": 52,
+     "exception_bytes": 86,
+     "total_bytes": 535,
+     "steps": 10833,
+     "train_s": 82.7,
+     "eval_s": 22.5
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 2613,
+     "n_params_used": 2117,
+     "model_bytes": 1936,
+     "n_exceptions": 62,
+     "exception_bytes": 104,
+     "total_bytes": 2042,
+     "steps": 10833,
+     "train_s": 82.6,
+     "eval_s": 1.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 2613,
+     "n_params_used": 2117,
+     "model_bytes": 822,
+     "n_exceptions": 25,
+     "exception_bytes": 59,
+     "total_bytes": 883,
+     "steps": 10833,
+     "train_s": 82.6,
+     "eval_s": 21.9
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 1309,
+    "n_params_used": 1061,
+    "model_bytes": 447,
+    "n_exceptions": 52,
+    "exception_bytes": 86,
+    "total_bytes": 535,
+    "steps": 10833,
+    "train_s": 82.7,
+    "eval_s": 22.5,
+    "verified_mismatches": 0,
+    "sha": "73c0373fcec6c152"
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 193,
+    "xz9e": 456
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 66,
+    "exception_bytes": 107,
+    "total_bytes": 109,
+    "cls": 2,
+    "verified_mismatches": 0,
+    "sha": "69a8147696388b21"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 56,
+     "n_exceptions": 44,
+     "exception_bytes": 82,
+     "total_bytes": 139,
+     "fit_s": 1.5
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 83,
+     "n_exceptions": 34,
+     "exception_bytes": 69,
+     "total_bytes": 153,
+     "fit_s": 1.5
+    },
+    {
+     "model": "tree",
+     "leaves": 57,
+     "model_bytes": 137,
+     "n_exceptions": 17,
+     "exception_bytes": 42,
+     "total_bytes": 181,
+     "fit_s": 1.5
+    },
+    {
+     "model": "tree",
+     "leaves": 57,
+     "model_bytes": 137,
+     "n_exceptions": 17,
+     "exception_bytes": 42,
+     "total_bytes": 181,
+     "fit_s": 1.5
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 16,
+    "model_bytes": 56,
+    "n_exceptions": 44,
+    "exception_bytes": 82,
+    "total_bytes": 139,
+    "fit_s": 1.5,
+    "verified_mismatches": 0,
+    "sha": "953dc7edc4c42180"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1061,
+     "model_bytes": 1025,
+     "n_exceptions": 52,
+     "exception_bytes": 86,
+     "total_bytes": 1113,
+     "steps": 10833,
+     "train_s": 82.9,
+     "eval_s": 1.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1061,
+     "model_bytes": 451,
+     "n_exceptions": 52,
+     "exception_bytes": 86,
+     "total_bytes": 539,
+     "steps": 10833,
+     "train_s": 82.9,
+     "eval_s": 21.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 2613,
+     "n_params_used": 2117,
+     "model_bytes": 1932,
+     "n_exceptions": 56,
+     "exception_bytes": 97,
+     "total_bytes": 2031,
+     "steps": 10833,
+     "train_s": 82.7,
+     "eval_s": 1.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 2613,
+     "n_params_used": 2117,
+     "model_bytes": 815,
+     "n_exceptions": 14,
+     "exception_bytes": 37,
+     "total_bytes": 854,
+     "steps": 10833,
+     "train_s": 82.7,
+     "eval_s": 21.2
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 1309,
+    "n_params_used": 1061,
+    "model_bytes": 451,
+    "n_exceptions": 52,
+    "exception_bytes": 86,
+    "total_bytes": 539,
+    "steps": 10833,
+    "train_s": 82.9,
+    "eval_s": 21.3,
+    "verified_mismatches": 0,
+    "sha": "76c11668b98e8ed0"
+   }
+  }
+ },
+ "seconds": 438.8
+}

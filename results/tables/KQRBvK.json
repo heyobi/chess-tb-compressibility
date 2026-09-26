@@ -1,0 +1,260 @@
+{
+ "table": "KQRBvK",
+ "classes": 5,
+ "mode": "large",
+ "pieces": 5,
+ "pawnful": false,
+ "symmetric": false,
+ "n_positions": 148512767,
+ "raw_size": 335544320,
+ "train_sample": 15999352,
+ "eval_sample": 4000000,
+ "syzygy_rtbw_bytes": 280720,
+ "label_counts": [
+  100737115,
+  0,
+  1718525,
+  0,
+  46057127
+ ],
+ "capture_resolvable": 17465363,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 365168,
+    "xz9e": 182368
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 47775652,
+    "exception_bytes": 1690381,
+    "total_bytes": 1690383,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "f2c6498422a4c6c4"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 4,
+    "model_bytes": 24,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 31,
+    "verified_mismatches": 0,
+    "sha": "b1f069b3fbcb60d4",
+    "est_total_bytes": 255
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 3253,
+     "model_bytes": 2401,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 2632,
+     "error_rate": 0.0,
+     "steps": 12000,
+     "train_s": 112.8,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 3253,
+     "model_bytes": 952,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 1183,
+     "error_rate": 0.0,
+     "steps": 12000,
+     "train_s": 112.8,
+     "estimated": true
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 1,
+    "arch": "(8, [])",
+    "bits": 4,
+    "n_params": 3253,
+    "model_bytes": 952,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 960,
+    "verified_mismatches": 0,
+    "sha": "08ab0c8c59d34092",
+    "est_total_bytes": 1183
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 365168,
+    "xz9e": 182368
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 47775652,
+    "exception_bytes": 1690381,
+    "total_bytes": 1690383,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "f2c6498422a4c6c4"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    },
+    {
+     "model": "tree",
+     "leaves": 4,
+     "model_bytes": 24,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 255,
+     "error_rate": 0.0,
+     "estimated": true
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 4,
+    "model_bytes": 24,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 31,
+    "verified_mismatches": 0,
+    "sha": "a45ab40e92d2691c",
+    "est_total_bytes": 255
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 3253,
+     "model_bytes": 2401,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 2632,
+     "error_rate": 0.0,
+     "steps": 12000,
+     "train_s": 108.8,
+     "estimated": true
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 3253,
+     "model_bytes": 952,
+     "est_n_exceptions": 0,
+     "est_exception_bytes": 223,
+     "est_total_bytes": 1183,
+     "error_rate": 0.0,
+     "steps": 12000,
+     "train_s": 108.8,
+     "estimated": true
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 1,
+    "arch": "(8, [])",
+    "bits": 4,
+    "n_params": 3253,
+    "model_bytes": 952,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 960,
+    "verified_mismatches": 0,
+    "sha": "08ab0c8c59d34092",
+    "est_total_bytes": 1183
+   }
+  }
+ },
+ "seconds": 1433.3
+}

@@ -63,6 +63,7 @@ def main():
     ap.add_argument("--classes", type=int, default=5, choices=(3, 5))
     ap.add_argument("--out", default=os.path.join(ROOT, "results", "tables"))
     ap.add_argument("--skip-xz", action="store_true")
+    ap.add_argument("--no-movegen", action="store_true")
     args = ap.parse_args()
     torch.set_num_threads(args.threads)
     os.makedirs(args.out, exist_ok=True)
@@ -73,16 +74,16 @@ def main():
     t0 = time.time()
     mdl.log(f"{args.table}: loading (large mode)")
     td = mdl.TableData(args.table, train_max=args.train_max, full=False, classes=args.classes,
-                       eval_max=args.eval_max, tree_feats=True)
+                       eval_max=args.eval_max, tree_feats=True, no_movegen=args.no_movegen)
     t = td.t
     mdl.log(f"{args.table}: {t.n} positions, train sample {len(td.train_idx)}, eval sample {len(td.eval_idx)}")
-    res = dict(table=args.table, classes=args.classes, mode="large", pieces=t.nslots, pawnful=t.pawnful,
+    res = dict(table=args.table, classes=args.classes, no_movegen=args.no_movegen, mode="large", pieces=t.nslots, pawnful=t.pawnful,
                symmetric=t.symmetric, n_positions=int(t.n), raw_size=int(t.raw_size),
                train_sample=int(len(td.train_idx)), eval_sample=int(len(td.eval_idx)),
                syzygy_rtbw_bytes=os.path.getsize(os.path.join(TB_DIR, args.table + ".rtbw")),
                label_counts=np.bincount(td.y, minlength=5).tolist(),
                capture_resolvable=int(((td.bc.astype(np.int16) + 2) == td.y).sum()), variants={})
-    encdir = os.path.join(t.dir, "enc" if args.classes == 5 else "enc3")
+    encdir = os.path.join(t.dir, ("enc" if args.classes == 5 else "enc3") + ("_nomg" if args.no_movegen else ""))
     os.makedirs(encdir, exist_ok=True)
     calib = torch.from_numpy(td.eval_ids[:200_000].astype(np.int32))
     for v in args.variants.split(","):
@@ -106,7 +107,7 @@ def main():
         # ---- tree: sweep on samples, exact on the best ----
         yt, bct = td.y[td.train_idx], td.bc[td.train_idx]
         cand = np.arange(len(yt)) if v == "a" else np.flatnonzero((bct.astype(np.int16) + 2) != yt)
-        fit = cand[:4_000_000] if len(cand) > 4_000_000 else cand
+        fit = np.sort(np.random.default_rng(0).choice(cand, 4_000_000, replace=False)) if len(cand) > 4_000_000 else cand
         sweep, best, worse = [], None, 0
         for L in [int(x) for x in args.leaves.split(",")]:
             ts = time.time()

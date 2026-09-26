@@ -1,0 +1,316 @@
+{
+ "table": "KNNvK",
+ "classes": 5,
+ "no_movegen": false,
+ "pieces": 4,
+ "pawnful": false,
+ "symmetric": false,
+ "n_positions": 1573368,
+ "raw_size": 5242880,
+ "syzygy_rtbw_bytes": 1360,
+ "label_counts": [
+  15,
+  0,
+  1573276,
+  0,
+  77
+ ],
+ "capture_resolvable": 148040,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 399,
+    "xz9e": 560
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 92,
+    "exception_bytes": 157,
+    "total_bytes": 159,
+    "cls": 2,
+    "verified_mismatches": 0,
+    "sha": "1bdb2164a31a6812"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 59,
+     "n_exceptions": 72,
+     "exception_bytes": 114,
+     "total_bytes": 174,
+     "fit_s": 3.8
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 96,
+     "n_exceptions": 61,
+     "exception_bytes": 100,
+     "total_bytes": 197,
+     "fit_s": 3.8
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 160,
+     "n_exceptions": 48,
+     "exception_bytes": 83,
+     "total_bytes": 245,
+     "fit_s": 4.5
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 281,
+     "n_exceptions": 13,
+     "exception_bytes": 34,
+     "total_bytes": 317,
+     "fit_s": 4.3
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 16,
+    "model_bytes": 59,
+    "n_exceptions": 72,
+    "exception_bytes": 114,
+    "total_bytes": 174,
+    "fit_s": 3.8,
+    "verified_mismatches": 0,
+    "sha": "903ce423da7f4f00"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 989,
+     "n_params_used": 753,
+     "model_bytes": 821,
+     "n_exceptions": 92,
+     "exception_bytes": 157,
+     "total_bytes": 980,
+     "steps": 11523,
+     "train_s": 89.8,
+     "eval_s": 1.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 989,
+     "n_params_used": 753,
+     "model_bytes": 413,
+     "n_exceptions": 92,
+     "exception_bytes": 157,
+     "total_bytes": 572,
+     "steps": 11523,
+     "train_s": 89.8,
+     "eval_s": 23.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 1973,
+     "n_params_used": 1501,
+     "model_bytes": 1531,
+     "n_exceptions": 90,
+     "exception_bytes": 148,
+     "total_bytes": 1681,
+     "steps": 11523,
+     "train_s": 90.2,
+     "eval_s": 1.4
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 1973,
+     "n_params_used": 1501,
+     "model_bytes": 744,
+     "n_exceptions": 87,
+     "exception_bytes": 141,
+     "total_bytes": 887,
+     "steps": 11523,
+     "train_s": 90.2,
+     "eval_s": 23.5
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 989,
+    "n_params_used": 753,
+    "model_bytes": 413,
+    "n_exceptions": 92,
+    "exception_bytes": 157,
+    "total_bytes": 572,
+    "steps": 11523,
+    "train_s": 89.8,
+    "eval_s": 23.0,
+    "verified_mismatches": 0,
+    "sha": "93d326c948480622"
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 399,
+    "xz9e": 560
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 92,
+    "exception_bytes": 157,
+    "total_bytes": 159,
+    "cls": 2,
+    "verified_mismatches": 0,
+    "sha": "1bdb2164a31a6812"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 58,
+     "n_exceptions": 72,
+     "exception_bytes": 114,
+     "total_bytes": 173,
+     "fit_s": 2.9
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 96,
+     "n_exceptions": 61,
+     "exception_bytes": 100,
+     "total_bytes": 197,
+     "fit_s": 3.3
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 153,
+     "n_exceptions": 48,
+     "exception_bytes": 83,
+     "total_bytes": 238,
+     "fit_s": 3.8
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 283,
+     "n_exceptions": 14,
+     "exception_bytes": 35,
+     "total_bytes": 320,
+     "fit_s": 4.4
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 16,
+    "model_bytes": 58,
+    "n_exceptions": 72,
+    "exception_bytes": 114,
+    "total_bytes": 173,
+    "fit_s": 2.9,
+    "verified_mismatches": 0,
+    "sha": "08ebab2f565d470b"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 989,
+     "n_params_used": 753,
+     "model_bytes": 823,
+     "n_exceptions": 92,
+     "exception_bytes": 157,
+     "total_bytes": 982,
+     "steps": 11523,
+     "train_s": 85.4,
+     "eval_s": 1.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 989,
+     "n_params_used": 753,
+     "model_bytes": 417,
+     "n_exceptions": 92,
+     "exception_bytes": 157,
+     "total_bytes": 576,
+     "steps": 11523,
+     "train_s": 85.4,
+     "eval_s": 23.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 1973,
+     "n_params_used": 1501,
+     "model_bytes": 1518,
+     "n_exceptions": 90,
+     "exception_bytes": 148,
+     "total_bytes": 1668,
+     "steps": 11523,
+     "train_s": 88.9,
+     "eval_s": 1.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 1973,
+     "n_params_used": 1501,
+     "model_bytes": 730,
+     "n_exceptions": 82,
+     "exception_bytes": 131,
+     "total_bytes": 863,
+     "steps": 11523,
+     "train_s": 88.9,
+     "eval_s": 24.2
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 989,
+    "n_params_used": 753,
+    "model_bytes": 417,
+    "n_exceptions": 92,
+    "exception_bytes": 157,
+    "total_bytes": 576,
+    "steps": 11523,
+    "train_s": 85.4,
+    "eval_s": 23.3,
+    "verified_mismatches": 0,
+    "sha": "f7ccd6f27ef06c25"
+   }
+  }
+ },
+ "seconds": 488.4
+}
