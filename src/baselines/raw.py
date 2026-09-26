@@ -27,9 +27,11 @@ def syzygy_style_fill(y, best_cap, chunk=1 << 24):
 
 
 def compressed_sizes(arr):
-    b = np.ascontiguousarray(arr, dtype=np.uint8).tobytes()
-    z = zstandard.ZstdCompressor(level=19, threads=-1).compress(b)
-    assert zstandard.ZstdDecompressor().decompress(z) == b
-    x = lzma.compress(b, preset=9 | lzma.PRESET_EXTREME)
-    assert lzma.decompress(x) == b
-    return {"zstd19": len(z), "xz9e": len(x)}
+    a = np.ascontiguousarray(arr, dtype=np.uint8)
+    z = zstandard.ZstdCompressor(level=19, threads=-1).compress(a)  # buffer protocol, no copy
+    assert np.array_equal(np.frombuffer(zstandard.ZstdDecompressor().decompress(z), np.uint8), a)
+    zl = len(z)
+    del z
+    x = lzma.compress(a, preset=9 | lzma.PRESET_EXTREME)
+    assert np.array_equal(np.frombuffer(lzma.decompress(x), np.uint8), a)
+    return {"zstd19": zl, "xz9e": len(x)}

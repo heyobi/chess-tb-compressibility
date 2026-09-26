@@ -212,17 +212,19 @@ def mlp_sweep(td, variant, cfgs, budget, bits_list=(8, 4), patience=2, seed=0, k
 
 
 def const_model(td, variant):
+    """Best constant predictor: the class with the fewest exceptions is found
+    by counting; only that one is encoded (memory: large tables)."""
     y, bc = td.y, td.bc
-    counts = np.bincount(y, minlength=5)
-    best = None
+    counts = []
     for c in range(5):
         pred = np.full(td.n, c, np.uint8)
-        ctx = pred * 5 + pred
-        cont, nexc, exb = encode_container(bytes([c]), pred, ctx, y, bc, variant)
-        if best is None or len(cont) < best[0]["total_bytes"]:
-            best = (dict(model="const", cfg=-1, bits=0, n_params=0, model_bytes=1, n_exceptions=int(nexc),
-                         exception_bytes=exb, total_bytes=len(cont), cls=c), cont, bytes([c]))
-    return best
+        counts.append(int(np.count_nonzero(decoded_values(pred, bc, variant) != y)))
+        del pred
+    c = int(np.argmin(counts))
+    pred = np.full(td.n, c, np.uint8)
+    cont, nexc, exb = encode_container(bytes([c]), pred, pred * 5 + pred, y, bc, variant)
+    return (dict(model="const", cfg=-1, bits=0, n_params=0, model_bytes=1, n_exceptions=int(nexc),
+                 exception_bytes=exb, total_bytes=len(cont), cls=c), cont, bytes([c]))
 
 
 def tree_sweep(td, variant, leaves_list, fit_max=4_000_000, patience=3, seed=0):

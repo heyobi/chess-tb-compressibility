@@ -17,7 +17,7 @@ TB_DIR = os.environ.get("TB_DIR", os.path.expanduser("~/tb"))
 
 
 class Table:
-    def __init__(self, name, data_dir=None, load_labels=True):
+    def __init__(self, name, data_dir=None, load_labels=True, mmap=False):
         self.name = name
         self.dir = os.path.join(data_dir or DATA_DIR, name)
         with open(os.path.join(self.dir, "meta.json")) as f:
@@ -36,10 +36,11 @@ class Table:
         self.block_counts = np.array(m["block_counts"], dtype=np.int64)
         self.block_size = int(np.prod(self.radix[2:]))
         self.block_offsets = np.concatenate([[0], np.cumsum(self.block_counts)])
-        self.feat = np.fromfile(os.path.join(self.dir, "feat.u8"), dtype=np.uint8)
+        rd = (lambda f: np.memmap(f, dtype=np.uint8, mode="r")) if mmap else (lambda f: np.fromfile(f, dtype=np.uint8))
+        self.feat = rd(os.path.join(self.dir, "feat.u8"))
         self.labels_raw = None
         if load_labels and os.path.exists(os.path.join(self.dir, "labels.u8")):
-            self.labels_raw = np.fromfile(os.path.join(self.dir, "labels.u8"), dtype=np.uint8)
+            self.labels_raw = rd(os.path.join(self.dir, "labels.u8"))
         self._bits = None
 
     @property
@@ -58,7 +59,7 @@ class Table:
 
     def bits(self):
         if self._bits is None:
-            self._bits = np.fromfile(os.path.join(self.dir, "valid.bits"), dtype=np.uint8)
+            self._bits = np.memmap(os.path.join(self.dir, "valid.bits"), dtype=np.uint8, mode="r")
         return self._bits
 
     def raw_indices(self, start, stop):
@@ -87,6 +88,21 @@ class Table:
         sq[:, 0] = self.wk_domain[r % len(self.wk_domain)]
         r //= len(self.wk_domain)
         return sq, r.astype(np.int8)
+
+    def ranks_to_raw(self, ranks):
+        """raw indices for sorted ranks (any subset), block by block."""
+        ranks = np.asarray(ranks, dtype=np.int64)
+        out = np.empty(len(ranks), np.int64)
+        blk = np.searchsorted(self.block_offsets, ranks, side="right") - 1
+        bits = self.bits()
+        bs8 = self.block_size // 8
+        starts = np.flatnonzero(np.r_[True, blk[1:] != blk[:-1]])
+        ends = np.r_[starts[1:], len(ranks)]
+        for s, e in zip(starts, ends):
+            b = int(blk[s])
+            raw = np.flatnonzero(np.unpackbits(bits[b * bs8:(b + 1) * bs8], bitorder="little"))
+            out[s:e] = raw[ranks[s:e] - self.block_offsets[b]] + b * self.block_size
+        return out
 
     def positions(self, start=0, stop=None):
         stop = self.n if stop is None else stop

@@ -7,6 +7,7 @@ the per-table exception containers. The best configuration is decoded again
 from bytes and checked against every table.
 """
 import argparse
+import copy
 import json
 import os
 import sys
@@ -55,7 +56,7 @@ def main():
                syzygy_bytes=int(sum(os.path.getsize(os.path.join(TB_DIR, n + ".rtbw")) for n in names)),
                variants={})
     for v in args.variants.split(","):
-        ids = torch.from_numpy(np.concatenate([td.ids for td in tds]).astype(np.int32))
+        ids = torch.from_numpy(np.concatenate([td.ids for td in tds]).astype(np.int16))
         allowed = torch.from_numpy(np.concatenate([allowed_mask(td.y[td.train_idx], td.bc[td.train_idx], v) for td in tds]))
         calib = ids[torch.randperm(len(ids), generator=torch.Generator().manual_seed(1))[:200_000]]
         sweep, best = [], None
@@ -68,7 +69,13 @@ def main():
             ttr = time.time() - t0
             improved = False
             for bits in (8, 4):
-                q = quantize(net, calib, bits, used_rows=used)
+                qnet = net
+                if bits == 4:  # same short quantisation-aware fine-tuning as per table
+                    qnet = copy.deepcopy(net)
+                    qnet.qat_bits = 4
+                    train(qnet, ids, allowed, max(500, steps // 4), batch=4096, lr=5e-4, seed=cfg + 100)
+                    qnet.qat_bits = None
+                q = quantize(qnet, calib, bits, used_rows=used)
                 blob = q.serialize()
                 conts, nexc = [], 0
                 for td in tds:

@@ -43,100 +43,100 @@
      "n_exceptions": 40959,
      "exception_bytes": 25173,
      "total_bytes": 25237,
-     "fit_s": 6.4
+     "fit_s": 9.4
     },
     {
      "model": "tree",
      "leaves": 32,
-     "model_bytes": 86,
+     "model_bytes": 88,
      "n_exceptions": 40959,
      "exception_bytes": 25173,
-     "total_bytes": 25260,
-     "fit_s": 6.4
+     "total_bytes": 25262,
+     "fit_s": 8.2
     },
     {
      "model": "tree",
      "leaves": 64,
-     "model_bytes": 154,
+     "model_bytes": 155,
      "n_exceptions": 38448,
      "exception_bytes": 23577,
-     "total_bytes": 23733,
-     "fit_s": 6.2
+     "total_bytes": 23734,
+     "fit_s": 10.0
     },
     {
      "model": "tree",
      "leaves": 128,
-     "model_bytes": 280,
-     "n_exceptions": 36105,
-     "exception_bytes": 22042,
-     "total_bytes": 22324,
-     "fit_s": 6.5
+     "model_bytes": 285,
+     "n_exceptions": 35965,
+     "exception_bytes": 21977,
+     "total_bytes": 22264,
+     "fit_s": 8.5
     },
     {
      "model": "tree",
      "leaves": 256,
-     "model_bytes": 505,
-     "n_exceptions": 33936,
-     "exception_bytes": 21242,
-     "total_bytes": 21749,
-     "fit_s": 6.5
+     "model_bytes": 515,
+     "n_exceptions": 32907,
+     "exception_bytes": 21431,
+     "total_bytes": 21948,
+     "fit_s": 8.7
     },
     {
      "model": "tree",
      "leaves": 512,
-     "model_bytes": 945,
-     "n_exceptions": 30288,
-     "exception_bytes": 20192,
-     "total_bytes": 21139,
-     "fit_s": 6.9
+     "model_bytes": 941,
+     "n_exceptions": 28336,
+     "exception_bytes": 19401,
+     "total_bytes": 20344,
+     "fit_s": 8.9
     },
     {
      "model": "tree",
      "leaves": 1024,
-     "model_bytes": 1792,
-     "n_exceptions": 24165,
-     "exception_bytes": 17744,
-     "total_bytes": 19538,
-     "fit_s": 6.8
+     "model_bytes": 1821,
+     "n_exceptions": 20826,
+     "exception_bytes": 16089,
+     "total_bytes": 17912,
+     "fit_s": 9.0
     },
     {
      "model": "tree",
      "leaves": 2048,
-     "model_bytes": 3453,
-     "n_exceptions": 14819,
-     "exception_bytes": 12892,
-     "total_bytes": 16347,
-     "fit_s": 7.2
+     "model_bytes": 3524,
+     "n_exceptions": 10950,
+     "exception_bytes": 10354,
+     "total_bytes": 13880,
+     "fit_s": 10.5
     },
     {
      "model": "tree",
      "leaves": 4096,
-     "model_bytes": 6896,
-     "n_exceptions": 5402,
-     "exception_bytes": 6070,
-     "total_bytes": 12968,
-     "fit_s": 7.5
+     "model_bytes": 7033,
+     "n_exceptions": 3849,
+     "exception_bytes": 4642,
+     "total_bytes": 11677,
+     "fit_s": 9.3
     },
     {
      "model": "tree",
-     "leaves": 8192,
-     "model_bytes": 13773,
-     "n_exceptions": 25,
-     "exception_bytes": 72,
-     "total_bytes": 13847,
-     "fit_s": 8.1
+     "leaves": 6985,
+     "model_bytes": 11886,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 11894,
+     "fit_s": 8.9
     }
    ],
    "tree": {
     "model": "tree",
     "leaves": 4096,
-    "model_bytes": 6896,
-    "n_exceptions": 5402,
-    "exception_bytes": 6070,
-    "total_bytes": 12968,
-    "fit_s": 7.5,
+    "model_bytes": 7033,
+    "n_exceptions": 3849,
+    "exception_bytes": 4642,
+    "total_bytes": 11677,
+    "fit_s": 9.3,
     "verified_mismatches": 0,
-    "sha": "cc14132576b14557"
+    "sha": "3b603fb679623ae8"
    },
    "mlp_sweep": [
     {
@@ -364,100 +364,100 @@
      "n_exceptions": 40959,
      "exception_bytes": 25173,
      "total_bytes": 25237,
-     "fit_s": 6.0
+     "fit_s": 7.7
     },
     {
      "model": "tree",
      "leaves": 32,
-     "model_bytes": 87,
+     "model_bytes": 88,
      "n_exceptions": 40959,
      "exception_bytes": 25173,
-     "total_bytes": 25261,
-     "fit_s": 6.2
+     "total_bytes": 25262,
+     "fit_s": 8.2
     },
     {
      "model": "tree",
      "leaves": 64,
-     "model_bytes": 154,
-     "n_exceptions": 38565,
-     "exception_bytes": 23736,
-     "total_bytes": 23892,
-     "fit_s": 5.5
+     "model_bytes": 155,
+     "n_exceptions": 38448,
+     "exception_bytes": 23577,
+     "total_bytes": 23734,
+     "fit_s": 8.7
     },
     {
      "model": "tree",
      "leaves": 128,
-     "model_bytes": 282,
-     "n_exceptions": 36958,
-     "exception_bytes": 22886,
-     "total_bytes": 23170,
-     "fit_s": 6.4
+     "model_bytes": 285,
+     "n_exceptions": 35965,
+     "exception_bytes": 21977,
+     "total_bytes": 22264,
+     "fit_s": 8.4
     },
     {
      "model": "tree",
      "leaves": 256,
-     "model_bytes": 510,
-     "n_exceptions": 34531,
-     "exception_bytes": 22063,
-     "total_bytes": 22575,
-     "fit_s": 6.7
+     "model_bytes": 515,
+     "n_exceptions": 32907,
+     "exception_bytes": 21431,
+     "total_bytes": 21948,
+     "fit_s": 8.8
     },
     {
      "model": "tree",
      "leaves": 512,
-     "model_bytes": 943,
-     "n_exceptions": 30774,
-     "exception_bytes": 20750,
-     "total_bytes": 21695,
-     "fit_s": 7.9
+     "model_bytes": 941,
+     "n_exceptions": 28336,
+     "exception_bytes": 19401,
+     "total_bytes": 20344,
+     "fit_s": 8.9
     },
     {
      "model": "tree",
      "leaves": 1024,
-     "model_bytes": 1798,
-     "n_exceptions": 24586,
-     "exception_bytes": 18074,
-     "total_bytes": 19874,
-     "fit_s": 7.4
+     "model_bytes": 1821,
+     "n_exceptions": 20826,
+     "exception_bytes": 16089,
+     "total_bytes": 17912,
+     "fit_s": 9.4
     },
     {
      "model": "tree",
      "leaves": 2048,
-     "model_bytes": 3457,
-     "n_exceptions": 14970,
-     "exception_bytes": 12988,
-     "total_bytes": 16447,
-     "fit_s": 7.4
+     "model_bytes": 3524,
+     "n_exceptions": 10950,
+     "exception_bytes": 10354,
+     "total_bytes": 13880,
+     "fit_s": 9.6
     },
     {
      "model": "tree",
      "leaves": 4096,
-     "model_bytes": 6922,
-     "n_exceptions": 5371,
-     "exception_bytes": 5970,
-     "total_bytes": 12894,
-     "fit_s": 7.5
+     "model_bytes": 7033,
+     "n_exceptions": 3849,
+     "exception_bytes": 4642,
+     "total_bytes": 11677,
+     "fit_s": 9.9
     },
     {
      "model": "tree",
-     "leaves": 8192,
-     "model_bytes": 13804,
-     "n_exceptions": 81,
-     "exception_bytes": 196,
-     "total_bytes": 14002,
-     "fit_s": 7.0
+     "leaves": 6985,
+     "model_bytes": 11886,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 11894,
+     "fit_s": 10.1
     }
    ],
    "tree": {
     "model": "tree",
     "leaves": 4096,
-    "model_bytes": 6922,
-    "n_exceptions": 5371,
-    "exception_bytes": 5970,
-    "total_bytes": 12894,
-    "fit_s": 7.5,
+    "model_bytes": 7033,
+    "n_exceptions": 3849,
+    "exception_bytes": 4642,
+    "total_bytes": 11677,
+    "fit_s": 9.9,
     "verified_mismatches": 0,
-    "sha": "90ad30cfd7322538"
+    "sha": "3b603fb679623ae8"
    },
    "mlp_sweep": [
     {
@@ -660,5 +660,6 @@
    }
   }
  },
- "seconds": 2751.4
+ "seconds": 2751.4,
+ "tree_version": 2
 }

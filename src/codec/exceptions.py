@@ -64,13 +64,14 @@ def read_varint(buf, pos=0):
 def encode(idx, labels, ctx):
     """idx: sorted unique int64 positions; labels: uint8 true labels;
     ctx: uint8 context per position of the whole table."""
-    idx = np.ascontiguousarray(idx, dtype=np.uint64)
+    idx = np.ascontiguousarray(idx)
+    idx = idx.view(np.uint64) if idx.dtype == np.int64 else idx.astype(np.uint64)  # no copy for int64
     labels = np.ascontiguousarray(labels, dtype=np.uint8)
     ctx = np.ascontiguousarray(ctx, dtype=np.uint8)
     assert len(idx) == len(labels)
     if len(idx) > 1:
-        assert np.all(np.diff(idx.astype(np.int64)) > 0)
-    cap = 64 + len(idx) * 8
+        assert np.all(idx[1:] > idx[:-1])
+    cap = 64 + len(idx) * 2  # grown and retried if too small
     while True:
         out = np.empty(cap, dtype=np.uint8)
         n = _lib.exc_encode(_ptr(idx), _ptr(labels), _ptr(ctx), len(idx), _ptr(out), cap)
