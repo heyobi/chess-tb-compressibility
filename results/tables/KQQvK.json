@@ -55,7 +55,7 @@
     "total_bytes": 31,
     "fit_s": 1.6,
     "verified_mismatches": 0,
-    "sha": "de6e126cef9f4049"
+    "sha": "4e6a32bd35f20266"
    },
    "mlp_sweep": [
     {
@@ -133,7 +133,7 @@
      "n_exceptions": 0,
      "exception_bytes": 6,
      "total_bytes": 31,
-     "fit_s": 1.1
+     "fit_s": 1.5
     }
    ],
    "tree": {
@@ -143,9 +143,9 @@
     "n_exceptions": 0,
     "exception_bytes": 6,
     "total_bytes": 31,
-    "fit_s": 1.1,
+    "fit_s": 1.5,
     "verified_mismatches": 0,
-    "sha": "de6e126cef9f4049"
+    "sha": "4e6a32bd35f20266"
    },
    "mlp_sweep": [
     {
@@ -198,5 +198,6 @@
    }
   }
  },
- "seconds": 179.6
+ "seconds": 179.6,
+ "tree_version": 2
 }

@@ -49,7 +49,7 @@ def main():
     mdl.log(f"{args.table}: loading")
     td = mdl.TableData(args.table, train_max=args.train_max, classes=args.classes, no_movegen=args.no_movegen)
     t = td.t
-    res = dict(table=args.table, classes=args.classes, no_movegen=args.no_movegen, pieces=t.nslots, pawnful=t.pawnful, symmetric=t.symmetric,
+    res = dict(table=args.table, tree_version=2, classes=args.classes, no_movegen=args.no_movegen, pieces=t.nslots, pawnful=t.pawnful, symmetric=t.symmetric,
                n_positions=int(t.n), raw_size=int(t.raw_size),
                syzygy_rtbw_bytes=os.path.getsize(os.path.join(TB_DIR, args.table + ".rtbw")),
                label_counts=np.bincount(td.y, minlength=5).tolist(),

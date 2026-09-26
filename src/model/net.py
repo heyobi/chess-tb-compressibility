@@ -98,7 +98,7 @@ def train(net, ids, allowed, steps, batch=4096, lr=3e-3, seed=0, log=None):
     net.train()
     for step in range(steps):
         bi = torch.randint(0, N, (min(batch, N),), generator=g)
-        logits = net(ids[bi])
+        logits = net(ids[bi].int())
         logp = F.log_softmax(logits, dim=1)
         a = allowed[bi]
         loss = -(torch.logsumexp(logp.masked_fill(~a, -1e9), dim=1)).mean()
@@ -237,7 +237,7 @@ def quantize(net, calib_ids, bits, used_rows=None, q=0.99999):
     if used_rows is not None:
         E[~used_rows] = 0  # rows no position uses never influence a prediction
     b0 = net.b0.detach().numpy().astype(np.float64)
-    _, acts = net(torch.as_tensor(calib_ids), return_acts=True)
+    _, acts = net(torch.as_tensor(calib_ids).int(), return_acts=True)
     sA = np.array([max(float(torch.quantile(a.flatten()[:1 << 24], q)) if a.numel() else 1.0, 1e-6) / 127
                    for a in acts], dtype=np.float32)
     sE = (np.maximum(np.abs(E).max(axis=0), 1e-8) / qmax).astype(np.float32)

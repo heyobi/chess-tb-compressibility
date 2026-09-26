@@ -77,7 +77,7 @@ def main():
                        eval_max=args.eval_max, tree_feats=True, no_movegen=args.no_movegen)
     t = td.t
     mdl.log(f"{args.table}: {t.n} positions, train sample {len(td.train_idx)}, eval sample {len(td.eval_idx)}")
-    res = dict(table=args.table, classes=args.classes, no_movegen=args.no_movegen, mode="large", pieces=t.nslots, pawnful=t.pawnful,
+    res = dict(table=args.table, classes=args.classes, no_movegen=args.no_movegen, mode="large", tree_version=2, pieces=t.nslots, pawnful=t.pawnful,
                symmetric=t.symmetric, n_positions=int(t.n), raw_size=int(t.raw_size),
                train_sample=int(len(td.train_idx)), eval_sample=int(len(td.eval_idx)),
                syzygy_rtbw_bytes=os.path.getsize(os.path.join(TB_DIR, args.table + ".rtbw")),
@@ -86,7 +86,14 @@ def main():
     encdir = os.path.join(t.dir, ("enc" if args.classes == 5 else "enc3") + ("_nomg" if args.no_movegen else ""))
     os.makedirs(encdir, exist_ok=True)
     calib = torch.from_numpy(td.eval_ids[:200_000].astype(np.int32))
+    if os.path.exists(out_path + ".partial"):  # resume after an interruption
+        prev = json.load(open(out_path + ".partial"))
+        if prev.get("n_positions") == res["n_positions"]:
+            res["variants"] = prev["variants"]
     for v in args.variants.split(","):
+        if v in res["variants"]:
+            mdl.log(f"  [{args.table}/{v}] already done (resumed)")
+            continue
         vr = {}
         arr = td.y if v == "a" else rawbase.syzygy_style_fill(td.y, td.bc)
         if args.skip_xz:
@@ -105,42 +112,10 @@ def main():
         mdl.log(f"  [{args.table}/{v}] const {r['total_bytes']}")
 
         # ---- tree: sweep on samples, exact on the best ----
-        yt, bct = td.y[td.train_idx], td.bc[td.train_idx]
-        cand = np.arange(len(yt)) if v == "a" else np.flatnonzero((bct.astype(np.int16) + 2) != yt)
-        fit = np.sort(np.random.default_rng(0).choice(cand, 4_000_000, replace=False)) if len(cand) > 4_000_000 else cand
-        sweep, best, worse = [], None, 0
-        for L in [int(x) for x in args.leaves.split(",")]:
-            ts = time.time()
-            clf = treebase.fit(td.train_X[fit], yt[fit], L)
-            blob = treebase.serialize(clf)
-            pe = treebase.FlatTree(blob).predict(td.eval_X)
-            ne, eb, rate = est_bytes(td, pe, pe * 5 + pe, v)
-            total = len(blob) + eb + 8
-            rr = dict(model="tree", leaves=int(clf.get_n_leaves()), model_bytes=len(blob), est_n_exceptions=ne,
-                      est_exception_bytes=eb, est_total_bytes=total, error_rate=rate, estimated=True)
-            sweep.append(rr)
-            mdl.log(f"  [{args.table}/{v}] tree L={L} model={len(blob)} est_exc={ne} est_total={total} ({time.time()-ts:.0f}s)")
-            if best is None or total < best[0]["est_total_bytes"]:
-                best, worse = (rr, blob), 0
-            else:
-                worse += 1
-            if worse >= 3 or len(blob) >= best[0]["est_total_bytes"]:
-                break
-        rr, blob = best
-        pred = tree_full_predict(td, treebase.FlatTree(blob))
-        cont, nexc, exb = mdl.encode_container(blob, pred, pred * 5 + pred, td.y, td.bc, v)
-        del pred
-
-        def pf_tree(b):
-            p = tree_full_predict(td, treebase.FlatTree(b))
-            return p, p * 5 + p
-        bad = int((mdl.decode_container(cont, pf_tree, td.bc, v) != td.y).sum())
+        sweep, tr, cont = mdl.large_tree_sweep(td, v, [int(x) for x in args.leaves.split(",")], args.table)
         vr["tree_sweep"] = sweep
-        vr["tree"] = dict(model="tree", leaves=rr["leaves"], model_bytes=len(blob), n_exceptions=int(nexc),
-                          exception_bytes=exb, total_bytes=len(cont), verified_mismatches=bad, sha=mdl.sha(cont),
-                          est_total_bytes=rr["est_total_bytes"])
+        vr["tree"] = tr
         open(os.path.join(encdir, f"tree_{v}.bin"), "wb").write(cont)
-        mdl.log(f"  [{args.table}/{v}] tree exact total={len(cont)} (est {rr['est_total_bytes']}) mismatches={bad}")
 
         # ---- MLP: sweep on samples, exact on the best ----
         ids_t, allowed_t = td.train_tensors(v)

@@ -91,7 +91,7 @@ def main():
     tb = chess.syzygy.open_tablebase(TB_DIR)
     for f in sorted(os.listdir(rdir)):
         r = json.load(open(os.path.join(rdir, f)))
-        if r["pieces"] < 4 or r.get("mode") == "large":
+        if r["pieces"] < 4 or r.get("mode") == "large" or (sys.argv[1:] and r["table"] not in sys.argv[1:]):
             continue
         name = r["table"]
         td = mdl.TableData(name, train_max=1)

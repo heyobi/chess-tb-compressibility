@@ -52,7 +52,7 @@ class TableData:
         self.full = (t.n <= FULL_LIMIT) if full is None else full
         rng = np.random.default_rng(seed)
         p = min(1.0, train_max / t.n)
-        ids_all, Xs, sel_all = [], [], []
+        ids_all, Xs, sel_all, tree_sel = [], [], [], []
         pe = min(1.0, eval_max / t.n) if eval_max else 0.0
         if pe:
             # evaluation sample = 64 random blocks of consecutive positions, so
@@ -75,8 +75,10 @@ class TableData:
                 sel = np.flatnonzero(rng.random(e - s) < p)
                 ids_all.append(ids[sel].astype(idt))
                 sel_all.append(sel + s)
-                if tree_feats:
-                    Xs.append(treebase.numeric_features(t, sq[sel], stm[sel], t.feat[s:e][sel]))
+                if tree_feats:  # tree fit sample: ~4M of the training sample
+                    ts_ = sel[rng.random(len(sel)) < min(1.0, 4_000_000 / train_max)]
+                    Xs.append(treebase.numeric_features(t, sq[ts_], stm[ts_], t.feat[s:e][ts_]))
+                    tree_sel.append(ts_ + s)
                 if pe:
                     es = np.flatnonzero(in_eval[s:e])
                     ev_ids.append(ids[es].astype(idt))
@@ -87,6 +89,7 @@ class TableData:
         self.ids = np.concatenate(ids_all)
         self.train_idx = np.arange(t.n) if self.full else np.concatenate(sel_all)
         self.train_X = np.concatenate(Xs) if Xs else None
+        self.tree_idx = np.concatenate(tree_sel) if tree_sel else None
         if pe:
             self.eval_ids = np.concatenate(ev_ids)
             self.eval_idx = np.concatenate(ev_sel)
@@ -109,7 +112,7 @@ class TableData:
         ids = self.ids if self.train_sel is None else self.ids[self.train_sel]
         idx = self.train_idx if self.train_sel is None else self.train_idx[self.train_sel]
         allowed = allowed_mask(self.y[idx], self.bc[idx], variant)
-        return torch.from_numpy(ids.astype(np.int32)), torch.from_numpy(allowed)
+        return torch.from_numpy(ids if ids.dtype == np.int16 else ids.astype(np.int32)), torch.from_numpy(allowed)
 
     def predict(self, q):
         p1 = np.empty(self.n, np.uint8)
@@ -228,10 +231,9 @@ def tree_sweep(td, variant, leaves_list, fit_max=4_000_000, patience=3, seed=0):
     # numeric features for the whole table (uint8)
     X = np.concatenate([treebase.numeric_features(t, sq, stm, t.feat[s:e]) for s, e, sq, stm in t.iter_chunks()])
     rng = np.random.default_rng(seed)
-    if variant == "a":
-        cand = np.arange(td.n)
-    else:  # train only on positions whose value is not given by a capture
-        cand = np.flatnonzero((bc.astype(np.int16) + 2) != y)
+    # both variants: fit on all positions with the true label (the true label
+    # is an allowed stored value in variant b too)
+    cand = np.arange(td.n)
     fit_idx = cand if len(cand) <= fit_max else np.sort(rng.choice(cand, fit_max, replace=False))
     res, best, worse = [], None, 0
     for L in leaves_list:
@@ -252,7 +254,7 @@ def tree_sweep(td, variant, leaves_list, fit_max=4_000_000, patience=3, seed=0):
             best, worse = (r, cont, blob, X), 0
         else:
             worse += 1
-        if worse >= patience or nexc == 0 or len(blob) >= best[0]["total_bytes"]:
+        if worse >= patience or nexc == 0 or len(blob) >= best[0]["total_bytes"] or r["leaves"] < L // 2:
             break
     return res, best
 
@@ -284,3 +286,60 @@ def verify_tree(td, cont, variant, X):
 
 def sha(b):
     return hashlib.sha256(b).hexdigest()[:16]
+
+
+def large_tree_sweep(td, v, leaves_list, log_name=""):
+    """Tree sweep for large tables: fit on the training sample, estimate on the
+    block evaluation sample, then exact encoding + verification on the full
+    table (chunked). Returns (sweep, result dict, container)."""
+    from codec import exceptions as _exc
+    yt = td.y[td.tree_idx]
+    fit = np.arange(len(yt))
+
+    def est(pred):
+        y, bc = td.y[td.eval_idx], td.bc[td.eval_idx]
+        wrong = np.flatnonzero(decoded_values(pred, bc, v) != y)
+        b = len(_exc.encode(wrong, y[wrong], pred * 5 + pred))
+        scale = td.n / len(td.eval_idx)
+        return int(round(len(wrong) * scale)), int(round(b * scale)), len(wrong) / len(td.eval_idx)
+
+    def full_predict(blob):
+        ft = treebase.FlatTree(blob)
+        out = np.empty(td.n, np.uint8)
+        t = td.t
+        for s, e, sq, stm in t.iter_chunks():
+            out[s:e] = ft.predict(treebase.numeric_features(t, sq, stm, t.feat[s:e]))
+        return out
+
+    sweep, best, worse = [], None, 0
+    for L in leaves_list:
+        ts = time.time()
+        clf = treebase.fit(td.train_X[fit], yt[fit], L)
+        blob = treebase.serialize(clf)
+        pe = treebase.FlatTree(blob).predict(td.eval_X)
+        ne, eb, rate = est(pe)
+        total = len(blob) + eb + 8
+        rr = dict(model="tree", leaves=int(clf.get_n_leaves()), model_bytes=len(blob), est_n_exceptions=ne,
+                  est_exception_bytes=eb, est_total_bytes=total, error_rate=rate, estimated=True)
+        sweep.append(rr)
+        log(f"  [{log_name}/{v}] tree L={L} model={len(blob)} est_exc={ne} est_total={total} ({time.time()-ts:.0f}s)")
+        if best is None or total < best[0]["est_total_bytes"]:
+            best, worse = (rr, blob), 0
+        else:
+            worse += 1
+        if worse >= 3 or ne == 0 or len(blob) >= best[0]["est_total_bytes"] or rr["leaves"] < L // 2:
+            break
+    rr, blob = best
+    pred = full_predict(blob)
+    cont, nexc, exb = encode_container(blob, pred, pred * 5 + pred, td.y, td.bc, v)
+    del pred
+
+    def pf(b):
+        p = full_predict(b)
+        return p, p * 5 + p
+    bad = int((decode_container(cont, pf, td.bc, v) != td.y).sum())
+    res = dict(model="tree", leaves=rr["leaves"], model_bytes=len(blob), n_exceptions=int(nexc),
+               exception_bytes=exb, total_bytes=len(cont), verified_mismatches=bad, sha=sha(cont),
+               est_total_bytes=rr["est_total_bytes"])
+    log(f"  [{log_name}/{v}] tree exact total={len(cont)} (est {rr['est_total_bytes']}) mismatches={bad}")
+    return sweep, res, cont

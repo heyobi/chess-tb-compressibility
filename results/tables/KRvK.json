@@ -55,7 +55,7 @@
     "total_bytes": 35,
     "fit_s": 0.0,
     "verified_mismatches": 0,
-    "sha": "db171081fa58dbff"
+    "sha": "7a7e92c3500d7476"
    },
    "mlp_sweep": [
     {
@@ -128,24 +128,24 @@
    "tree_sweep": [
     {
      "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
+     "leaves": 5,
+     "model_bytes": 28,
      "n_exceptions": 0,
      "exception_bytes": 6,
-     "total_bytes": 31,
+     "total_bytes": 35,
      "fit_s": 0.0
     }
    ],
    "tree": {
     "model": "tree",
-    "leaves": 4,
-    "model_bytes": 24,
+    "leaves": 5,
+    "model_bytes": 28,
     "n_exceptions": 0,
     "exception_bytes": 6,
-    "total_bytes": 31,
+    "total_bytes": 35,
     "fit_s": 0.0,
     "verified_mismatches": 0,
-    "sha": "daec83ff58dd94bc"
+    "sha": "7a7e92c3500d7476"
    },
    "mlp_sweep": [
     {
@@ -198,5 +198,6 @@
    }
   }
  },
- "seconds": 49.6
+ "seconds": 49.6,
+ "tree_version": 2
 }

@@ -1,0 +1,401 @@
+{
+ "table": "KRBvK",
+ "tree_version": 2,
+ "classes": 5,
+ "no_movegen": false,
+ "pieces": 4,
+ "pawnful": false,
+ "symmetric": false,
+ "n_positions": 2878883,
+ "raw_size": 5242880,
+ "syzygy_rtbw_bytes": 2832,
+ "label_counts": [
+  1557650,
+  0,
+  150238,
+  0,
+  1170995
+ ],
+ "capture_resolvable": 274705,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 7539,
+    "xz9e": 7208
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 1321233,
+    "exception_bytes": 48970,
+    "total_bytes": 48972,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "690bdebf97456cb6"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 60,
+     "n_exceptions": 3351,
+     "exception_bytes": 2454,
+     "total_bytes": 2515,
+     "fit_s": 6.0
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 92,
+     "n_exceptions": 2828,
+     "exception_bytes": 2225,
+     "total_bytes": 2318,
+     "fit_s": 5.5
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 154,
+     "n_exceptions": 2427,
+     "exception_bytes": 2124,
+     "total_bytes": 2280,
+     "fit_s": 5.5
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 277,
+     "n_exceptions": 1955,
+     "exception_bytes": 1840,
+     "total_bytes": 2119,
+     "fit_s": 5.1
+    },
+    {
+     "model": "tree",
+     "leaves": 256,
+     "model_bytes": 513,
+     "n_exceptions": 1243,
+     "exception_bytes": 1335,
+     "total_bytes": 1850,
+     "fit_s": 5.0
+    },
+    {
+     "model": "tree",
+     "leaves": 512,
+     "model_bytes": 931,
+     "n_exceptions": 675,
+     "exception_bytes": 829,
+     "total_bytes": 1762,
+     "fit_s": 5.3
+    },
+    {
+     "model": "tree",
+     "leaves": 891,
+     "model_bytes": 1575,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 1583,
+     "fit_s": 5.4
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 891,
+    "model_bytes": 1575,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 1583,
+    "fit_s": 5.4,
+    "verified_mismatches": 0,
+    "sha": "4329c93da82faff0"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1065,
+     "model_bytes": 952,
+     "n_exceptions": 3848,
+     "exception_bytes": 3287,
+     "total_bytes": 4241,
+     "steps": 12000,
+     "train_s": 106.0,
+     "eval_s": 1.6
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1065,
+     "model_bytes": 367,
+     "n_exceptions": 5301,
+     "exception_bytes": 4510,
+     "total_bytes": 4879,
+     "steps": 12000,
+     "train_s": 106.0,
+     "eval_s": 25.1
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 2613,
+     "n_params_used": 2125,
+     "model_bytes": 1899,
+     "n_exceptions": 2827,
+     "exception_bytes": 2591,
+     "total_bytes": 4492,
+     "steps": 12000,
+     "train_s": 95.8,
+     "eval_s": 2.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 2613,
+     "n_params_used": 2125,
+     "model_bytes": 751,
+     "n_exceptions": 3668,
+     "exception_bytes": 3432,
+     "total_bytes": 4185,
+     "steps": 12000,
+     "train_s": 95.8,
+     "eval_s": 25.5
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 8,
+     "n_params": 5493,
+     "n_params_used": 4517,
+     "model_bytes": 4328,
+     "n_exceptions": 841,
+     "exception_bytes": 1178,
+     "total_bytes": 5508,
+     "steps": 12000,
+     "train_s": 103.4,
+     "eval_s": 3.5
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 4,
+     "n_params": 5493,
+     "n_params_used": 4517,
+     "model_bytes": 1989,
+     "n_exceptions": 1089,
+     "exception_bytes": 1475,
+     "total_bytes": 3466,
+     "steps": 12000,
+     "train_s": 103.4,
+     "eval_s": 31.7
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 8,
+     "n_params": 11493,
+     "n_params_used": 9541,
+     "model_bytes": 9331,
+     "n_exceptions": 100,
+     "exception_bytes": 229,
+     "total_bytes": 9562,
+     "steps": 12000,
+     "train_s": 106.7,
+     "eval_s": 7.1
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 4,
+     "n_params": 11493,
+     "n_params_used": 9541,
+     "model_bytes": 4381,
+     "n_exceptions": 347,
+     "exception_bytes": 635,
+     "total_bytes": 5018,
+     "steps": 12000,
+     "train_s": 106.7,
+     "eval_s": 36.1
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 2,
+    "arch": "(16, [16])",
+    "bits": 4,
+    "n_params": 5493,
+    "n_params_used": 4517,
+    "model_bytes": 1989,
+    "n_exceptions": 1089,
+    "exception_bytes": 1475,
+    "total_bytes": 3466,
+    "steps": 12000,
+    "train_s": 103.4,
+    "eval_s": 31.7,
+    "verified_mismatches": 0,
+    "sha": "1af2292639236e10"
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 2169,
+    "xz9e": 2140
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 1175443,
+    "exception_bytes": 31422,
+    "total_bytes": 31424,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "b15ba2d50c3ed045"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 60,
+     "n_exceptions": 3351,
+     "exception_bytes": 2454,
+     "total_bytes": 2515,
+     "fit_s": 5.9
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 92,
+     "n_exceptions": 1948,
+     "exception_bytes": 1664,
+     "total_bytes": 1757,
+     "fit_s": 4.9
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 154,
+     "n_exceptions": 1490,
+     "exception_bytes": 1396,
+     "total_bytes": 1552,
+     "fit_s": 5.3
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 277,
+     "n_exceptions": 1142,
+     "exception_bytes": 1165,
+     "total_bytes": 1444,
+     "fit_s": 5.3
+    },
+    {
+     "model": "tree",
+     "leaves": 256,
+     "model_bytes": 513,
+     "n_exceptions": 623,
+     "exception_bytes": 772,
+     "total_bytes": 1287,
+     "fit_s": 5.3
+    },
+    {
+     "model": "tree",
+     "leaves": 512,
+     "model_bytes": 931,
+     "n_exceptions": 211,
+     "exception_bytes": 367,
+     "total_bytes": 1300,
+     "fit_s": 5.3
+    },
+    {
+     "model": "tree",
+     "leaves": 891,
+     "model_bytes": 1575,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 1583,
+     "fit_s": 5.3
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 256,
+    "model_bytes": 513,
+    "n_exceptions": 623,
+    "exception_bytes": 772,
+    "total_bytes": 1287,
+    "fit_s": 5.3,
+    "verified_mismatches": 0,
+    "sha": "718dcbbf35212e8c"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1065,
+     "model_bytes": 986,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 994,
+     "steps": 12000,
+     "train_s": 92.8,
+     "eval_s": 1.5
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1065,
+     "model_bytes": 379,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 387,
+     "steps": 12000,
+     "train_s": 92.8,
+     "eval_s": 27.2
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 1309,
+    "n_params_used": 1065,
+    "model_bytes": 379,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 387,
+    "steps": 12000,
+    "train_s": 92.8,
+    "eval_s": 27.2,
+    "verified_mismatches": 0,
+    "sha": "d4344286f355343a"
+   }
+  }
+ },
+ "seconds": 752.0
+}

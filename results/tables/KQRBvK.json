@@ -47,36 +47,6 @@
      "est_total_bytes": 255,
      "error_rate": 0.0,
      "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
     }
    ],
    "tree": {
@@ -87,7 +57,7 @@
     "exception_bytes": 6,
     "total_bytes": 31,
     "verified_mismatches": 0,
-    "sha": "b1f069b3fbcb60d4",
+    "sha": "f2717abcd97170b4",
     "est_total_bytes": 255
    },
    "mlp_sweep": [
@@ -165,36 +135,6 @@
      "est_total_bytes": 255,
      "error_rate": 0.0,
      "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
-    },
-    {
-     "model": "tree",
-     "leaves": 4,
-     "model_bytes": 24,
-     "est_n_exceptions": 0,
-     "est_exception_bytes": 223,
-     "est_total_bytes": 255,
-     "error_rate": 0.0,
-     "estimated": true
     }
    ],
    "tree": {
@@ -205,7 +145,7 @@
     "exception_bytes": 6,
     "total_bytes": 31,
     "verified_mismatches": 0,
-    "sha": "a45ab40e92d2691c",
+    "sha": "f2717abcd97170b4",
     "est_total_bytes": 255
    },
    "mlp_sweep": [
@@ -256,5 +196,6 @@
    }
   }
  },
- "seconds": 1433.3
+ "seconds": 1433.3,
+ "tree_version": 2
 }

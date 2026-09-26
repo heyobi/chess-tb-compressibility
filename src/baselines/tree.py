@@ -20,7 +20,7 @@ def numeric_features(t, sq, stm, feat):
     cols = []
     for i in range(t.nslots):
         s = sq[:, i].astype(np.int16)
-        cols += [s, s & 7, s >> 3]
+        cols += [s, s & 7, s >> 3, ((s & 7) + (s >> 3)) & 1]  # square, file, rank, square colour
     cols.append(stm.astype(np.int16))
     wk, bk = sq[:, 0], sq[:, 1]
     cols.append(cheb(wk, bk))

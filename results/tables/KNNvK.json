@@ -39,50 +39,50 @@
     {
      "model": "tree",
      "leaves": 16,
-     "model_bytes": 59,
-     "n_exceptions": 72,
-     "exception_bytes": 114,
-     "total_bytes": 174,
-     "fit_s": 3.8
+     "model_bytes": 63,
+     "n_exceptions": 65,
+     "exception_bytes": 106,
+     "total_bytes": 170,
+     "fit_s": 4.0
     },
     {
      "model": "tree",
      "leaves": 32,
-     "model_bytes": 96,
-     "n_exceptions": 61,
-     "exception_bytes": 100,
-     "total_bytes": 197,
-     "fit_s": 3.8
+     "model_bytes": 93,
+     "n_exceptions": 58,
+     "exception_bytes": 98,
+     "total_bytes": 192,
+     "fit_s": 3.5
     },
     {
      "model": "tree",
      "leaves": 64,
-     "model_bytes": 160,
-     "n_exceptions": 48,
-     "exception_bytes": 83,
-     "total_bytes": 245,
+     "model_bytes": 159,
+     "n_exceptions": 43,
+     "exception_bytes": 82,
+     "total_bytes": 243,
      "fit_s": 4.5
     },
     {
      "model": "tree",
      "leaves": 128,
-     "model_bytes": 281,
-     "n_exceptions": 13,
-     "exception_bytes": 34,
-     "total_bytes": 317,
-     "fit_s": 4.3
+     "model_bytes": 288,
+     "n_exceptions": 6,
+     "exception_bytes": 19,
+     "total_bytes": 309,
+     "fit_s": 4.5
     }
    ],
    "tree": {
     "model": "tree",
     "leaves": 16,
-    "model_bytes": 59,
-    "n_exceptions": 72,
-    "exception_bytes": 114,
-    "total_bytes": 174,
-    "fit_s": 3.8,
+    "model_bytes": 63,
+    "n_exceptions": 65,
+    "exception_bytes": 106,
+    "total_bytes": 170,
+    "fit_s": 4.0,
     "verified_mismatches": 0,
-    "sha": "903ce423da7f4f00"
+    "sha": "3bc19f1a2ffd75d0"
    },
    "mlp_sweep": [
     {
@@ -186,50 +186,50 @@
     {
      "model": "tree",
      "leaves": 16,
-     "model_bytes": 58,
-     "n_exceptions": 72,
-     "exception_bytes": 114,
-     "total_bytes": 173,
-     "fit_s": 2.9
+     "model_bytes": 63,
+     "n_exceptions": 65,
+     "exception_bytes": 106,
+     "total_bytes": 170,
+     "fit_s": 3.6
     },
     {
      "model": "tree",
      "leaves": 32,
-     "model_bytes": 96,
-     "n_exceptions": 61,
-     "exception_bytes": 100,
-     "total_bytes": 197,
-     "fit_s": 3.3
+     "model_bytes": 93,
+     "n_exceptions": 58,
+     "exception_bytes": 98,
+     "total_bytes": 192,
+     "fit_s": 3.7
     },
     {
      "model": "tree",
      "leaves": 64,
-     "model_bytes": 153,
-     "n_exceptions": 48,
-     "exception_bytes": 83,
-     "total_bytes": 238,
-     "fit_s": 3.8
+     "model_bytes": 159,
+     "n_exceptions": 43,
+     "exception_bytes": 82,
+     "total_bytes": 243,
+     "fit_s": 4.8
     },
     {
      "model": "tree",
      "leaves": 128,
-     "model_bytes": 283,
-     "n_exceptions": 14,
-     "exception_bytes": 35,
-     "total_bytes": 320,
-     "fit_s": 4.4
+     "model_bytes": 288,
+     "n_exceptions": 6,
+     "exception_bytes": 19,
+     "total_bytes": 309,
+     "fit_s": 4.8
     }
    ],
    "tree": {
     "model": "tree",
     "leaves": 16,
-    "model_bytes": 58,
-    "n_exceptions": 72,
-    "exception_bytes": 114,
-    "total_bytes": 173,
-    "fit_s": 2.9,
+    "model_bytes": 63,
+    "n_exceptions": 65,
+    "exception_bytes": 106,
+    "total_bytes": 170,
+    "fit_s": 3.6,
     "verified_mismatches": 0,
-    "sha": "08ebab2f565d470b"
+    "sha": "3bc19f1a2ffd75d0"
    },
    "mlp_sweep": [
     {
@@ -312,5 +312,6 @@
    }
   }
  },
- "seconds": 488.4
+ "seconds": 488.4,
+ "tree_version": 2
 }

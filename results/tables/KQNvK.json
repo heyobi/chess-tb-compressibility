@@ -1,0 +1,401 @@
+{
+ "table": "KQNvK",
+ "classes": 5,
+ "no_movegen": false,
+ "pieces": 4,
+ "pawnful": false,
+ "symmetric": false,
+ "n_positions": 2738690,
+ "raw_size": 5242880,
+ "syzygy_rtbw_bytes": 3600,
+ "label_counts": [
+  1543222,
+  0,
+  164666,
+  0,
+  1030802
+ ],
+ "capture_resolvable": 263460,
+ "variants": {
+  "a": {
+   "raw": {
+    "zstd19": 6519,
+    "xz9e": 5836
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 1195468,
+    "exception_bytes": 45388,
+    "total_bytes": 45390,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "bb49c950ed4af610"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 60,
+     "n_exceptions": 4112,
+     "exception_bytes": 2744,
+     "total_bytes": 2805,
+     "fit_s": 4.8
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 93,
+     "n_exceptions": 3800,
+     "exception_bytes": 2697,
+     "total_bytes": 2791,
+     "fit_s": 4.9
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 161,
+     "n_exceptions": 3669,
+     "exception_bytes": 2528,
+     "total_bytes": 2691,
+     "fit_s": 4.8
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 294,
+     "n_exceptions": 3529,
+     "exception_bytes": 2395,
+     "total_bytes": 2691,
+     "fit_s": 4.7
+    },
+    {
+     "model": "tree",
+     "leaves": 256,
+     "model_bytes": 523,
+     "n_exceptions": 3257,
+     "exception_bytes": 2047,
+     "total_bytes": 2572,
+     "fit_s": 4.6
+    },
+    {
+     "model": "tree",
+     "leaves": 512,
+     "model_bytes": 981,
+     "n_exceptions": 2557,
+     "exception_bytes": 1643,
+     "total_bytes": 2626,
+     "fit_s": 5.4
+    },
+    {
+     "model": "tree",
+     "leaves": 1024,
+     "model_bytes": 1856,
+     "n_exceptions": 869,
+     "exception_bytes": 675,
+     "total_bytes": 2533,
+     "fit_s": 5.7
+    },
+    {
+     "model": "tree",
+     "leaves": 1231,
+     "model_bytes": 2183,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 2191,
+     "fit_s": 4.9
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 1231,
+    "model_bytes": 2183,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 2191,
+    "fit_s": 4.9,
+    "verified_mismatches": 0,
+    "sha": "1d7ab3eec9d107cb"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1053,
+     "model_bytes": 975,
+     "n_exceptions": 4029,
+     "exception_bytes": 3147,
+     "total_bytes": 4124,
+     "steps": 12000,
+     "train_s": 90.3,
+     "eval_s": 1.7
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1053,
+     "model_bytes": 405,
+     "n_exceptions": 5191,
+     "exception_bytes": 3902,
+     "total_bytes": 4309,
+     "steps": 12000,
+     "train_s": 90.3,
+     "eval_s": 23.4
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 8,
+     "n_params": 2613,
+     "n_params_used": 2101,
+     "model_bytes": 1946,
+     "n_exceptions": 3713,
+     "exception_bytes": 3139,
+     "total_bytes": 5087,
+     "steps": 12000,
+     "train_s": 90.0,
+     "eval_s": 2.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 1,
+     "arch": "(8, [])",
+     "bits": 4,
+     "n_params": 2613,
+     "n_params_used": 2101,
+     "model_bytes": 790,
+     "n_exceptions": 3930,
+     "exception_bytes": 2914,
+     "total_bytes": 3706,
+     "steps": 12000,
+     "train_s": 90.0,
+     "eval_s": 25.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 8,
+     "n_params": 5493,
+     "n_params_used": 4469,
+     "model_bytes": 4361,
+     "n_exceptions": 240,
+     "exception_bytes": 419,
+     "total_bytes": 4782,
+     "steps": 12000,
+     "train_s": 100.0,
+     "eval_s": 3.2
+    },
+    {
+     "model": "mlp",
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 4,
+     "n_params": 5493,
+     "n_params_used": 4469,
+     "model_bytes": 2048,
+     "n_exceptions": 853,
+     "exception_bytes": 1221,
+     "total_bytes": 3271,
+     "steps": 12000,
+     "train_s": 100.0,
+     "eval_s": 28.3
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 8,
+     "n_params": 11493,
+     "n_params_used": 9445,
+     "model_bytes": 9221,
+     "n_exceptions": 44,
+     "exception_bytes": 115,
+     "total_bytes": 9338,
+     "steps": 12000,
+     "train_s": 105.0,
+     "eval_s": 6.9
+    },
+    {
+     "model": "mlp",
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 4,
+     "n_params": 11493,
+     "n_params_used": 9445,
+     "model_bytes": 4338,
+     "n_exceptions": 108,
+     "exception_bytes": 234,
+     "total_bytes": 4574,
+     "steps": 12000,
+     "train_s": 105.0,
+     "eval_s": 32.1
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 2,
+    "arch": "(16, [16])",
+    "bits": 4,
+    "n_params": 5493,
+    "n_params_used": 4469,
+    "model_bytes": 2048,
+    "n_exceptions": 853,
+    "exception_bytes": 1221,
+    "total_bytes": 3271,
+    "steps": 12000,
+    "train_s": 100.0,
+    "eval_s": 28.3,
+    "verified_mismatches": 0,
+    "sha": "1ed489bb59e2939c"
+   }
+  },
+  "b": {
+   "raw": {
+    "zstd19": 3396,
+    "xz9e": 3092
+   },
+   "const": {
+    "model": "const",
+    "cfg": -1,
+    "bits": 0,
+    "n_params": 0,
+    "model_bytes": 1,
+    "n_exceptions": 1041658,
+    "exception_bytes": 30327,
+    "total_bytes": 30329,
+    "cls": 0,
+    "verified_mismatches": 0,
+    "sha": "d4ee0ef542f5851a"
+   },
+   "tree_sweep": [
+    {
+     "model": "tree",
+     "leaves": 16,
+     "model_bytes": 60,
+     "n_exceptions": 4112,
+     "exception_bytes": 2744,
+     "total_bytes": 2805,
+     "fit_s": 4.9
+    },
+    {
+     "model": "tree",
+     "leaves": 32,
+     "model_bytes": 93,
+     "n_exceptions": 615,
+     "exception_bytes": 873,
+     "total_bytes": 967,
+     "fit_s": 5.1
+    },
+    {
+     "model": "tree",
+     "leaves": 64,
+     "model_bytes": 161,
+     "n_exceptions": 480,
+     "exception_bytes": 711,
+     "total_bytes": 874,
+     "fit_s": 5.7
+    },
+    {
+     "model": "tree",
+     "leaves": 128,
+     "model_bytes": 294,
+     "n_exceptions": 454,
+     "exception_bytes": 711,
+     "total_bytes": 1007,
+     "fit_s": 4.8
+    },
+    {
+     "model": "tree",
+     "leaves": 256,
+     "model_bytes": 523,
+     "n_exceptions": 180,
+     "exception_bytes": 332,
+     "total_bytes": 857,
+     "fit_s": 4.9
+    },
+    {
+     "model": "tree",
+     "leaves": 512,
+     "model_bytes": 981,
+     "n_exceptions": 30,
+     "exception_bytes": 81,
+     "total_bytes": 1064,
+     "fit_s": 5.9
+    }
+   ],
+   "tree": {
+    "model": "tree",
+    "leaves": 256,
+    "model_bytes": 523,
+    "n_exceptions": 180,
+    "exception_bytes": 332,
+    "total_bytes": 857,
+    "fit_s": 4.9,
+    "verified_mismatches": 0,
+    "sha": "eb0a00a9e18be9fc"
+   },
+   "mlp_sweep": [
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 8,
+     "n_params": 1309,
+     "n_params_used": 1053,
+     "model_bytes": 984,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 992,
+     "steps": 12000,
+     "train_s": 88.9,
+     "eval_s": 2.0
+    },
+    {
+     "model": "mlp",
+     "cfg": 0,
+     "arch": "(4, [])",
+     "bits": 4,
+     "n_params": 1309,
+     "n_params_used": 1053,
+     "model_bytes": 382,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 390,
+     "steps": 12000,
+     "train_s": 88.9,
+     "eval_s": 28.2
+    }
+   ],
+   "mlp": {
+    "model": "mlp",
+    "cfg": 0,
+    "arch": "(4, [])",
+    "bits": 4,
+    "n_params": 1309,
+    "n_params_used": 1053,
+    "model_bytes": 382,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 390,
+    "steps": 12000,
+    "train_s": 88.9,
+    "eval_s": 28.2,
+    "verified_mismatches": 0,
+    "sha": "d441c45ab5839bed"
+   }
+  }
+ },
+ "seconds": 676.1,
+ "tree_version": 2
+}

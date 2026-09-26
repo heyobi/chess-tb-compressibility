@@ -38,24 +38,24 @@
    "tree_sweep": [
     {
      "model": "tree",
-     "leaves": 16,
-     "model_bytes": 63,
+     "leaves": 13,
+     "model_bytes": 54,
      "n_exceptions": 0,
      "exception_bytes": 6,
-     "total_bytes": 70,
-     "fit_s": 2.2
+     "total_bytes": 61,
+     "fit_s": 2.5
     }
    ],
    "tree": {
     "model": "tree",
-    "leaves": 16,
-    "model_bytes": 63,
+    "leaves": 13,
+    "model_bytes": 54,
     "n_exceptions": 0,
     "exception_bytes": 6,
-    "total_bytes": 70,
-    "fit_s": 2.2,
+    "total_bytes": 61,
+    "fit_s": 2.5,
     "verified_mismatches": 0,
-    "sha": "c1b4a67bba16936b"
+    "sha": "3cf8142fac86a405"
    },
    "mlp_sweep": [
     {
@@ -158,51 +158,24 @@
    "tree_sweep": [
     {
      "model": "tree",
-     "leaves": 16,
-     "model_bytes": 63,
-     "n_exceptions": 272246,
-     "exception_bytes": 115781,
-     "total_bytes": 115845,
-     "fit_s": 2.7
-    },
-    {
-     "model": "tree",
-     "leaves": 16,
-     "model_bytes": 63,
-     "n_exceptions": 272246,
-     "exception_bytes": 115781,
-     "total_bytes": 115845,
-     "fit_s": 2.8
-    },
-    {
-     "model": "tree",
-     "leaves": 16,
-     "model_bytes": 63,
-     "n_exceptions": 272246,
-     "exception_bytes": 115781,
-     "total_bytes": 115845,
-     "fit_s": 2.8
-    },
-    {
-     "model": "tree",
-     "leaves": 16,
-     "model_bytes": 63,
-     "n_exceptions": 272246,
-     "exception_bytes": 115781,
-     "total_bytes": 115845,
-     "fit_s": 3.3
+     "leaves": 13,
+     "model_bytes": 54,
+     "n_exceptions": 0,
+     "exception_bytes": 6,
+     "total_bytes": 61,
+     "fit_s": 2.6
     }
    ],
    "tree": {
     "model": "tree",
-    "leaves": 16,
-    "model_bytes": 63,
-    "n_exceptions": 272246,
-    "exception_bytes": 115781,
-    "total_bytes": 115845,
-    "fit_s": 2.7,
+    "leaves": 13,
+    "model_bytes": 54,
+    "n_exceptions": 0,
+    "exception_bytes": 6,
+    "total_bytes": 61,
+    "fit_s": 2.6,
     "verified_mismatches": 0,
-    "sha": "113d8283dc355504"
+    "sha": "3cf8142fac86a405"
    },
    "mlp_sweep": [
     {
@@ -285,5 +258,6 @@
    }
   }
  },
- "seconds": 468.7
+ "seconds": 468.7,
+ "tree_version": 2
 }

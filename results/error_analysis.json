@@ -1,0 +1,177 @@
+{
+ "rows": [
+  {
+   "table": "KRvKR",
+   "pieces": 4,
+   "n": 1347906,
+   "n_exceptions": 9854,
+   "rate": 0.007310598810302796,
+   "syzygy_bytes": 12944,
+   "mlp_bytes": 13119,
+   "share[class=loss]": 0.006720053178782497,
+   "enrich[class=loss]": 7.8979871188909865,
+   "share[class=blessed loss]": 0.0,
+   "enrich[class=blessed loss]": null,
+   "share[class=draw]": 0.7021179518453067,
+   "enrich[class=draw]": 0.6456442940523796,
+   "share[class=cursed win]": 0.0,
+   "enrich[class=cursed win]": null,
+   "share[class=win]": 0.2911619949759108,
+   "enrich[class=win]": 1.6952990627636209,
+   "share[in check]": 0.20872152805907832,
+   "enrich[in check]": 0.6938157743496945,
+   "share[capture available]": 0.30322886017274203,
+   "enrich[capture available]": 0.16131098640020994,
+   "share[value given by a capture]": 0.30318508857442583,
+   "enrich[value given by a capture]": 0.14894969397836655,
+   "share[zugzwang]": 0.0,
+   "enrich[zugzwang]": null,
+   "share[stalemate/mate (no legal move)]": 0.000447360572621533,
+   "enrich[stalemate/mate (no legal move)]": 0.0,
+   "median_absDTZ_exceptions": 3.0,
+   "median_absDTZ_all_decisive": 1.0
+  },
+  {
+   "table": "KQvKQ",
+   "pieces": 4,
+   "n": 1119216,
+   "n_exceptions": 9619,
+   "rate": 0.008594408943403239,
+   "syzygy_bytes": 16528,
+   "mlp_bytes": 18455,
+   "share[class=loss]": 0.004548719818158425,
+   "enrich[class=loss]": 14.398638816578098,
+   "share[class=blessed loss]": 0.0,
+   "enrich[class=blessed loss]": null,
+   "share[class=draw]": 0.578003709739675,
+   "enrich[class=draw]": 0.662431793511544,
+   "share[class=cursed win]": 0.0,
+   "enrich[class=cursed win]": null,
+   "share[class=win]": 0.4174475704421667,
+   "enrich[class=win]": 1.3214032880274447,
+   "share[in check]": 0.34297669082643567,
+   "enrich[in check]": 0.35282426849589665,
+   "share[capture available]": 0.4294845677688668,
+   "enrich[capture available]": 0.09900242212705541,
+   "share[value given by a capture]": 0.4290664179211162,
+   "enrich[value given by a capture]": 0.07995755225128805,
+   "share[zugzwang]": 0.0,
+   "enrich[zugzwang]": null,
+   "share[stalemate/mate (no legal move)]": 0.0007156795471115495,
+   "enrich[stalemate/mate (no legal move)]": 0.0,
+   "median_absDTZ_exceptions": 3.0,
+   "median_absDTZ_all_decisive": 1.0
+  },
+  {
+   "table": "KQvKB",
+   "pieces": 4,
+   "n": 2598414,
+   "n_exceptions": 2709,
+   "rate": 0.001042559037936218,
+   "syzygy_bytes": 6672,
+   "mlp_bytes": 7440,
+   "share[class=loss]": 0.4376435009971467,
+   "enrich[class=loss]": 0.5389784108153229,
+   "share[class=blessed loss]": 0.0,
+   "enrich[class=blessed loss]": null,
+   "share[class=draw]": 0.13295841232382521,
+   "enrich[class=draw]": 5.172351483267381,
+   "share[class=cursed win]": 0.0,
+   "enrich[class=cursed win]": null,
+   "share[class=win]": 0.42939808667902807,
+   "enrich[class=win]": 0.1779513288563108,
+   "share[in check]": 0.2540980767498944,
+   "enrich[in check]": 0.6493773554255323,
+   "share[capture available]": 0.31363477875350115,
+   "enrich[capture available]": 0.2283329089497024,
+   "share[value given by a capture]": 0.2977335405366504,
+   "enrich[value given by a capture]": 0.09422731700039023,
+   "share[zugzwang]": 0.0,
+   "enrich[zugzwang]": null,
+   "share[stalemate/mate (no legal move)]": 0.0006557846440174661,
+   "enrich[stalemate/mate (no legal move)]": 3.377388361174801,
+   "median_absDTZ_exceptions": 14.0,
+   "median_absDTZ_all_decisive": 8.0
+  }
+ ],
+ "examples": {
+  "KQvKB": [
+   {
+    "fen": "8/8/1b6/6Q1/8/8/5k2/2K5 b - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   },
+   {
+    "fen": "5b2/8/8/8/8/8/k2K4/2Q5 b - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   },
+   {
+    "fen": "8/8/1b6/8/8/2K1k3/1Q6/8 b - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   },
+   {
+    "fen": "4b2k/8/8/8/4Q3/3K4/8/8 b - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   }
+  ],
+  "KQvKQ": [
+   {
+    "fen": "4Q3/q7/8/8/3k4/8/8/2K5 w - - 0 1",
+    "true": "draw",
+    "predicted": "win",
+    "zugzwang": false
+   },
+   {
+    "fen": "8/8/4q3/7Q/8/k7/2K5/8 w - - 0 1",
+    "true": "win",
+    "predicted": "draw",
+    "zugzwang": false
+   },
+   {
+    "fen": "8/8/q7/6Q1/2k5/8/3K4/8 w - - 0 1",
+    "true": "draw",
+    "predicted": "win",
+    "zugzwang": false
+   },
+   {
+    "fen": "1q6/8/6Q1/8/8/3K4/8/4k3 w - - 0 1",
+    "true": "win",
+    "predicted": "draw",
+    "zugzwang": false
+   }
+  ],
+  "KRvKR": [
+   {
+    "fen": "8/8/8/8/2R5/1k6/8/3K1r2 w - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   },
+   {
+    "fen": "8/8/6k1/8/7R/8/2K5/6r1 w - - 0 1",
+    "true": "draw",
+    "predicted": "win",
+    "zugzwang": false
+   },
+   {
+    "fen": "3R4/8/8/8/r7/2K5/8/1k6 w - - 0 1",
+    "true": "win",
+    "predicted": "draw",
+    "zugzwang": false
+   },
+   {
+    "fen": "8/8/8/3k4/8/r2K4/8/7R w - - 0 1",
+    "true": "draw",
+    "predicted": "loss",
+    "zugzwang": false
+   }
+  ]
+ }
+}
