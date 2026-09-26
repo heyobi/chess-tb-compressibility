@@ -128,8 +128,12 @@ of the table uses are zeroed (they cannot influence any prediction).
 Integer inference is exact on any IEEE-754 machine: matrix products are
 float32 BLAS on integer-valued tensors whose partial sums are provably
 < 2^24 in magnitude (checked per output row when quantising), so every
-summation order gives the same exact integer; re-quantisation is one float64
-multiply-add and a floor; ties in argmax resolve to the lowest class.
+summation order gives the same exact integer; re-quantisation is one
+correctly rounded multiply, one correctly rounded add of 0.5, a floor and a
+clamp to 0..127; ties in argmax resolve to the lowest class. Model format
+version 1 (used by the first tables processed) does the re-quantisation in
+float64, version 2 in float32 (3× faster); the version byte is part of the
+model and the decoder follows it.
 
 **Model bytes** = zstd -19 of the serialised model: header (3 B), float32
 scales, packed int8/int4 weights, int32 biases.
@@ -160,10 +164,15 @@ variant (b) — the smaller tables.
   value (keeps runs long; still decodes correctly with max(·, best capture)).
 * **No model**: constant prediction + exceptions (the exception coder alone).
 * **Decision tree**: scikit-learn CART (best-first, `max_leaf_nodes` sweep
-  16 … 262144) on integer features (squares, files, ranks, distances,
-  rule-of-the-square margin, the move-generator features), serialised in
-  pre-order and zstd -19'd; same exception coder. For (b) it is fit on the
-  non-capture-resolved positions only.
+  16 … 262144, ×2 steps) on small-integer features (per piece: square, file,
+  rank, square colour; king distances; per pawn: ranks to promotion, enemy-king
+  distance to the promotion square and the rule-of-the-square margin; the
+  three move-generator features), serialised in pre-order and zstd -19'd;
+  same exception coder (label context = the tree's class). In both variants
+  the tree is fitted on all positions with the true label (the true label is
+  an allowed stored value in variant (b) too). Note: an earlier version fitted
+  the (b) tree only on non-capture-resolved positions, which extrapolated
+  badly; all reported trees are "tree_version 2".
 
 ## 9. Model-size selection (MDL)
 
@@ -173,12 +182,66 @@ best total, when the model alone exceeds the best total, or when there are no
 exceptions left. The reported number is the minimum total. The same holds for
 tree sizes.
 
-## 10. Verification
+## 10. Large (5-piece) tables
+
+5-piece tables have 0.85–5.5 × 10^8 positions. On 4 CPU cores a full
+model-size sweep with exhaustive evaluation of every size is not affordable,
+so for these tables [`scripts/run_large.py`]:
+
+* models are trained on a uniform random sample of 16M positions (trees: 4M);
+* every sweep point (MLP config × {8, 4} bits, tree size) is evaluated on an
+  evaluation sample of 4M positions made of 64 random blocks of consecutive
+  positions (blocks preserve the index locality of exceptions, which the gap
+  coder exploits; a uniform sample over-estimated exception bytes by ~60%,
+  blocks come within ~10%). Exception bytes are extrapolated linearly;
+  these sweep points are marked `estimated` in the JSON;
+* the configuration with the best *estimated* total is then encoded exactly on
+  the **full** table and verified on the full table. Only these exact,
+  verified numbers are used in the scaling figures.
+
+Consequences: the chosen size may differ from the exact optimum by the
+estimation error, and models trained on a sample see only a fraction of the
+positions they must encode (they have to generalise), which the 3–4 piece
+models do not.
+
+### 5-piece subset
+
+All 110 5-piece tables would take far longer than the session allows
+(one 5-piece table: 1–4 CPU-hours for the sweep; one full pass of the
+largest model over a 5 × 10^8-position table: ~30 min), and the
+pawnful tables need their promotion sub-tables to be generated first. The
+subset (10 tables) was chosen before seeing any 5-piece result, to mix
+material types and Syzygy sizes (33 KB – 9.6 MB range in the full set):
+
+| table | why |
+|---|---|
+| KQRBvK | 3 v 0, trivially won (lower extreme) |
+| KQRvKR | 2 v 1 pawnless, mostly won |
+| KRBvKR | 2 v 1 pawnless, famously hard (mostly drawn, long wins) |
+| KQBvKQ | queen endings, very large Syzygy file |
+| KBBvKN | long wins, large Syzygy file |
+| KBNvKP | pawn on the weaker side (promotion races) |
+| KBPvKB | opposite/same-coloured bishops |
+| KRPvKR | the most important practical rook endgame |
+| KQPvKQ | queen + pawn vs queen |
+| KPPvKR | two pawns vs rook (needed 4 extra pawnful sub-tables) |
+
+All 110 pawnless 5-piece tables were generated (they are cheap and needed as
+promotion targets); of the pawnful ones only the subset and its promotion
+sub-tables (KQPvKR, KBPvKR, KNPvKR) were generated.
+
+## 11. Verification
 
 For the best encoding of every method and variant, the container bytes are
 decoded (model deserialised from bytes, exceptions range-decoded, variant-(b)
 max applied) and compared with the Syzygy value of every position
-[`src/mdl.py: verify_*`]. `tests/test_lossless.py` repeats this from the files
+[`src/mdl.py: verify_*`]. For 3–4 piece tables the predictions are recomputed
+from the deserialised model during verification. For the 5-piece tables the
+single full inference pass already uses the model deserialised from the
+container's bytes; verification then parses the container, checks the model
+part is byte-identical, range-decodes the exceptions, applies them to those
+predictions and compares all positions (a second inference pass would only
+re-test the determinism of integer inference). `tests/test_lossless.py` repeats this from the files
 on disk after regenerating the position set without tablebase access, and
 fails on a single mismatch. `verified_mismatches` is stored in each result
 JSON.
