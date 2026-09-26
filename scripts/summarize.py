@@ -9,6 +9,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
@@ -126,18 +127,21 @@ def mdl_plot(tables):
         for bits, mk in ((8, "o"), (4, "s")):
             sw = [x for x in r["variants"]["a"]["mlp_sweep"] if x["bits"] == bits]
             p = [x["n_params"] for x in sw]
-            ax.plot(p, [x["total_bytes"] for x in sw], color=COL["mlp"], marker=mk, lw=2, ms=7,
-                    label=f"total, {bits}-bit")
+            tot = [x.get("total_bytes", x.get("est_total_bytes")) for x in sw]
+            exb = [x.get("exception_bytes", x.get("est_exception_bytes")) for x in sw]
+            ax.plot(p, tot, color=COL["mlp"], marker=mk, lw=2, ms=7, label=f"total, {bits}-bit")
             ax.plot(p, [x["model_bytes"] for x in sw], color=COL["mlp"], marker=mk, lw=1, ls=":", ms=5, alpha=0.7,
                     label=f"model only, {bits}-bit")
-            ax.plot(p, [x["exception_bytes"] for x in sw], color=COL["tree"], marker=mk, lw=1, ls="--", ms=5,
+            ax.plot(p, exb, color=COL["tree"], marker=mk, lw=1, ls="--", ms=5,
                     alpha=0.8, label=f"exceptions only, {bits}-bit")
         ax.axhline(r["syzygy_rtbw_bytes"], color=INK2, lw=1, ls=":")
         ax.text(ax.get_xlim()[0] if False else min(p), r["syzygy_rtbw_bytes"] * 1.1, "Syzygy", color=INK2, fontsize=8)
         ax.set_xscale("log")
         ax.set_yscale("log")
+        ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
         ax.set_xlabel("MLP parameters", color=INK2)
-        ax.set_title(f"{name} ({r['n_positions']:,} pos.)", fontsize=10, color=INK, loc="left")
+        est = " — sample estimates" if r.get("mode") == "large" else ""
+        ax.set_title(f"{name} ({r['n_positions']:,} pos.){est}", fontsize=9, color=INK, loc="left")
         style(ax)
     np.atleast_1d(axes)[0].set_ylabel("bytes (variant a)", color=INK2)
     h, l = np.atleast_1d(axes)[0].get_legend_handles_labels()
@@ -164,7 +168,7 @@ def main():
     print(pooled.to_string())
     scaling_plot(df, joint, "ratio", "ratio_vs_pieces.png", "best total size / Syzygy WDL size", ref=1.0)
     scaling_plot(df, joint, "bits_per_pos", "bits_per_position.png", "bits per position")
-    reps = [t for t in ("KPvK", "KRvKP", "KQvKR", "KRBvKR", "KQRvKQ") if os.path.exists(os.path.join(RES, "tables", f"{t}.json"))]
+    reps = [t for t in ("KPvK", "KRvKP", "KRBvKR", "KQPvKQ") if os.path.exists(os.path.join(RES, "tables", f"{t}.json"))]
     if reps:
         mdl_plot(reps[:4])
 
