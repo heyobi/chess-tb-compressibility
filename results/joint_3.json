@@ -1,0 +1,200 @@
+{
+ "pieces": 3,
+ "tables": [
+  "KBvK",
+  "KNvK",
+  "KQvK",
+  "KRvK",
+  "KPvK"
+ ],
+ "n_positions": 367868,
+ "syzygy_bytes": 8464,
+ "variants": {
+  "a": {
+   "cfg": 2,
+   "arch": "(16, [16])",
+   "bits": 4,
+   "n_params": 19317,
+   "model_bytes": 4140,
+   "n_exceptions": 3745,
+   "total_bytes": 7180,
+   "steps": 3000,
+   "train_s": 25.5,
+   "per_table_exception_bytes": {
+    "KBvK": 7,
+    "KNvK": 7,
+    "KQvK": 7,
+    "KRvK": 7,
+    "KPvK": 3008
+   },
+   "verified_mismatches": 0,
+   "sweep": [
+    {
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 8,
+     "n_params": 19317,
+     "model_bytes": 9289,
+     "n_exceptions": 3295,
+     "total_bytes": 12075,
+     "steps": 3000,
+     "train_s": 25.5,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2754
+     }
+    },
+    {
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 4,
+     "n_params": 19317,
+     "model_bytes": 4140,
+     "n_exceptions": 3745,
+     "total_bytes": 7180,
+     "steps": 3000,
+     "train_s": 25.5,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 3008
+     }
+    },
+    {
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 8,
+     "n_params": 39141,
+     "model_bytes": 19272,
+     "n_exceptions": 2249,
+     "total_bytes": 21431,
+     "steps": 3000,
+     "train_s": 25.8,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2127
+     }
+    },
+    {
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 4,
+     "n_params": 39141,
+     "model_bytes": 8702,
+     "n_exceptions": 2712,
+     "total_bytes": 11167,
+     "steps": 3000,
+     "train_s": 25.8,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2433
+     }
+    }
+   ]
+  },
+  "b": {
+   "cfg": 2,
+   "arch": "(16, [16])",
+   "bits": 4,
+   "n_params": 19317,
+   "model_bytes": 4137,
+   "n_exceptions": 3764,
+   "total_bytes": 7215,
+   "steps": 3000,
+   "train_s": 23.9,
+   "per_table_exception_bytes": {
+    "KBvK": 7,
+    "KNvK": 7,
+    "KQvK": 7,
+    "KRvK": 7,
+    "KPvK": 3046
+   },
+   "verified_mismatches": 0,
+   "sweep": [
+    {
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 8,
+     "n_params": 19317,
+     "model_bytes": 9295,
+     "n_exceptions": 3317,
+     "total_bytes": 12116,
+     "steps": 3000,
+     "train_s": 23.9,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2789
+     }
+    },
+    {
+     "cfg": 2,
+     "arch": "(16, [16])",
+     "bits": 4,
+     "n_params": 19317,
+     "model_bytes": 4137,
+     "n_exceptions": 3764,
+     "total_bytes": 7215,
+     "steps": 3000,
+     "train_s": 23.9,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 3046
+     }
+    },
+    {
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 8,
+     "n_params": 39141,
+     "model_bytes": 19235,
+     "n_exceptions": 2214,
+     "total_bytes": 21365,
+     "steps": 3000,
+     "train_s": 25.8,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2098
+     }
+    },
+    {
+     "cfg": 3,
+     "arch": "(32, [32])",
+     "bits": 4,
+     "n_params": 39141,
+     "model_bytes": 8700,
+     "n_exceptions": 2952,
+     "total_bytes": 11286,
+     "steps": 3000,
+     "train_s": 25.8,
+     "per_table_exception_bytes": {
+      "KBvK": 7,
+      "KNvK": 7,
+      "KQvK": 7,
+      "KRvK": 7,
+      "KPvK": 2554
+     }
+    }
+   ]
+  }
+ }
+}

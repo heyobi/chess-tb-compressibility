@@ -1,0 +1,3 @@
+pieces,variant,tables,total_bytes,syzygy_bytes,n_positions,verified
+3,a,5,7180,8464,367868,True
+3,b,5,7215,8464,367868,True
