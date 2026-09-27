@@ -329,7 +329,11 @@ Example exceptions (FEN, true value → model), more in the file above:
   access).
 * 5-piece: verified on the full table during the run (`verified_mismatches`
   = 0 in every JSON); the independent from-scratch re-run of
-  `tests/test_lossless.py` on the 5-piece files: FIVE_PIECE_TEST_STATUS.
+  `tests/test_lossless.py` (position set regenerated without tablebases, model
+  and exceptions decoded from the stored bytes, every position compared) was
+  run on 3 of the 10 tables — KQRBvK, KQRvKR, KBBvKN: **3 passed** (43 min).
+  It was not repeated for the 7 others (≈1 h each); for those the in-run
+  full-table verification is the evidence.
 
 ## Method in brief
 
