@@ -264,8 +264,9 @@ Example exceptions (FEN, true value → model), more in the file above:
 * **5-piece size selection is sample-based** (16M training sample, 4M
   evaluation positions in 64 blocks); only the chosen configuration is encoded
   and verified on the full table. For the chosen configurations the estimate differed
-  from the exact full-table value by 0–16% (mostly 1–8%, usually on the low
-  side; `est_total_bytes` vs `total_bytes` in the JSON), so the chosen size
+  from the exact full-table value by 0–16% on the non-trivial tables (mostly 1–8%, usually on the low
+  side; +23% on KQRBvK, whose total is only 960 bytes; `est_total_bytes` vs
+  `total_bytes` in the JSON), so the chosen size
   may not be the exact optimum of the sweep.
 * **6 pieces: not measured.** The download host is blocked and the generator
   needs 2 × 7.75 GB for any 6-piece table on a 15.7 GB machine
