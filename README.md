@@ -316,6 +316,21 @@ Example exceptions (FEN, true value → model), more in the file above:
    python-chess on samples (exhaustively for 3 pieces).
 
 
+## Verification status
+
+* `tests/test_enumeration.py`: **58 passed** — the position set of every
+  3-piece table equals a brute-force python-chess enumeration of symmetry
+  orbits; labels equal python-chess's Syzygy prober on all 3-piece positions
+  and on 300 random positions of every other table; textbook positions.
+* `tests/test_lossless.py` (all 3- and 4-piece results, incl. 3-class and
+  ablation runs, `LOSSLESS_MAXPOS=20000000`): **52 passed**, i.e. every stored
+  container decodes, from its bytes alone, to exactly the Syzygy value of
+  every position (after regenerating the position set without tablebase
+  access).
+* 5-piece: verified on the full table during the run (`verified_mismatches`
+  = 0 in every JSON); the independent from-scratch re-run of
+  `tests/test_lossless.py` on the 5-piece files: FIVE_PIECE_TEST_STATUS.
+
 ## Method in brief
 
 Full definitions: [`docs/METHOD.md`](docs/METHOD.md). Environment and its
