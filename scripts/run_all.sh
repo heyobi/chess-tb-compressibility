@@ -51,7 +51,7 @@ OUT=results/ablation_nomovegen RUN_ARGS="--no-movegen --budget 12000 --cfgs 0,1,
   scripts/run_many.sh "$WORKERS" KQvK KRvK KPvK KQQvK KBNvK KQvKR KRvKP KPvKP
 
 # 5. joint models per piece count
-$PY scripts/run_joint.py 3 --threads "$WORKERS" --budget 12000 --cfgs 0,1,2,3,4,5,6,7
+$PY scripts/run_joint.py 3 --threads "$WORKERS"   # defaults: cfgs 2-7, budget 40000
 $PY scripts/run_joint.py 4 --threads "$WORKERS" --budget 12000 --cfgs 2,3,4,5,6,7
 
 # 6. 5-piece subset (sample-based size sweep, exact + verified final encoding).
