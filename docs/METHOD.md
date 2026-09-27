@@ -67,10 +67,13 @@ to the true value. It also stores the **best capture value** (maximum over
 legal captures, including capturing promotions, of minus the child value; the
 children are always in smaller tables).
 
-The 3-class version (loss/draw/win, where blessed loss and cursed win count as
-draws under the 50-move rule, or as loss/win without it) is reported as a
-separate label entropy statistic; the compression experiments use the 5-class
-labels (a 5-class lossless code also losslessly gives both 3-class views).
+The 3-class version (loss / draw / win *with* the 50-move rule, i.e. blessed
+loss and cursed win count as draws) is obtained by the monotone map
+0→0, 1,2,3→2, 4→4; because it is monotone, the variant-(b) rule
+max(stored, best capture) still applies. It was run with the same pipeline
+(`--classes 3`) for all 3-piece tables and KQvKR, KRvKR, KRvKP, KPvKP
+(`results/tables3/`). The main experiments use the 5-class labels, whose
+lossless code also gives both 3-class views.
 
 ## 4. Two variants
 

@@ -43,20 +43,25 @@ done
 
 # 4. per-table experiments (3-4 pieces exhaustive)
 RUN_ARGS="--budget 12000 --cfgs 0,1,2,3,4,5,6,7" scripts/run_many.sh "$WORKERS" $ALL34
-# 3-class labels
-OUT=results/tables3 RUN_ARGS="--classes 3 --budget 12000 --cfgs 0,1,2,3,4,5,6,7" scripts/run_many.sh "$WORKERS" $ALL34
+# 3-class labels (subset)
+OUT=results/tables3 RUN_ARGS="--classes 3 --budget 12000 --cfgs 0,1,2,3,4,5,6,7" \
+  scripts/run_many.sh "$WORKERS" KQvK KRvK KBvK KNvK KPvK KQvKR KRvKR KRvKP KPvKP
 # ablation without move-generator features (subset)
 OUT=results/ablation_nomovegen RUN_ARGS="--no-movegen --budget 12000 --cfgs 0,1,2,3,4,5,6,7" \
-  scripts/run_many.sh "$WORKERS" KQvK KRvK KPvK KQvKR KRvKP KPvKP KBNvK KQvKQ
+  scripts/run_many.sh "$WORKERS" KQvK KRvK KPvK KQQvK KBNvK KQvKR KRvKP KPvKP
 
 # 5. joint models per piece count
-$PY scripts/run_joint.py 3 --threads "$WORKERS"
-$PY scripts/run_joint.py 4 --threads "$WORKERS"
+$PY scripts/run_joint.py 3 --threads "$WORKERS" --budget 12000 --cfgs 0,1,2,3,4,5,6,7
+$PY scripts/run_joint.py 4 --threads "$WORKERS" --budget 12000 --cfgs 2,3,4,5,6,7
 
-# 6. 5-piece subset (sample-based size sweep, exact + verified final encoding)
-printf "%s\n" $SUBSET5 | xargs -P 2 -I{} sh -c "$PY -u scripts/run_large.py {} > logs/large_{}.log 2>&1"
+# 6. 5-piece subset (sample-based size sweep, exact + verified final encoding).
+# One table at a time: a pawnful 5-piece run peaks at ~8 GB of RAM.
+RUN_ARGS="--threads $WORKERS" scripts/run_many_large.sh 1 $SUBSET5
+$PY scripts/run_large.py KQRBvK --no-movegen --out results/ablation_nomovegen --threads "$WORKERS"
+$PY scripts/run_large.py KQRvKR --no-movegen --out results/ablation_nomovegen --threads "$WORKERS"
 
-# 7. summary, figures, error analysis, tests
+# 7. summary, figures, README tables, error analysis, tests
 $PY scripts/summarize.py
 $PY scripts/error_analysis.py
-$PY -m pytest -q tests/
+$PY scripts/report.py > /dev/null
+LOSSLESS_MAXPOS=${LOSSLESS_MAXPOS:-0} $PY -m pytest -q tests/
