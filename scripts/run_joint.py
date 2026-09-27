@@ -35,6 +35,9 @@ def main():
     ap.add_argument("--train-max", type=int, default=16_000_000)
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--variants", default="a,b")
+    ap.add_argument("--recover-from-log", default=None,
+                    help="rebuild variants that finished in an interrupted run from its log and the stored "
+                         "containers (re-verified by decoding)")
     args = ap.parse_args()
     torch.set_num_threads(args.threads)
     if args.tables:
@@ -55,7 +58,40 @@ def main():
     out = dict(pieces=args.pieces, tables=names, n_positions=int(ntot),
                syzygy_bytes=int(sum(os.path.getsize(os.path.join(TB_DIR, n + ".rtbw")) for n in names)),
                variants={})
+    part = os.path.join(ROOT, "results", f"joint_{args.pieces}.json.partial")
+    if os.path.exists(part):
+        out["variants"] = json.load(open(part))["variants"]
+    if args.recover_from_log:
+        import re
+        lines = open(args.recover_from_log).read().splitlines()
+        for v in args.variants.split(","):
+            if v in out["variants"] or not any(f"joint{args.pieces}/{v} best total" in l for l in lines):
+                continue
+            pat = re.compile(rf"joint{args.pieces}/{v} cfg(\d+) (\d)b model=(\d+) exc=(\d+) total=(\d+) .*train=(\d+)s")
+            sweep = []
+            for l in lines:
+                m = pat.search(l)
+                if m:
+                    cfg, bits, mb, ne, tot, tr = map(int, m.groups())
+                    sweep.append(dict(cfg=cfg, arch=str(CONFIGS[cfg]), bits=bits, n_params=Net(vocab.rows, cfg).n_params(),
+                                      model_bytes=mb, n_exceptions=ne, total_bytes=tot, train_s=tr))
+            best = min(sweep, key=lambda x: x["total_bytes"])
+            d = os.path.join(DATA_DIR, f"joint{args.pieces}")
+            blob = open(os.path.join(d, f"model_{v}.bin"), "rb").read()
+            conts = [open(os.path.join(d, f"{n}_{v}.bin"), "rb").read() for n in names]
+            assert len(blob) + sum(len(c) for c in conts) + 4 == best["total_bytes"], "stored files do not match log"
+            q = QNet.deserialize(blob, vocab.rows)
+            bad = 0
+            for td, c in zip(tds, conts):
+                p1, p2 = td.predict(q)
+                bad += int((mdl.decode_container(c, lambda _: (p1, p1 * 5 + p2), td.bc, v) != td.y).sum())
+            mdl.log(f"  joint{args.pieces}/{v} recovered from log: total={best['total_bytes']} verified mismatches={bad}")
+            out["variants"][v] = dict(best, per_table_exception_bytes={n: len(c) for n, c in zip(names, conts)},
+                                      verified_mismatches=bad, recovered_from_log=True, sweep=sweep)
+            json.dump(out, open(part, "w"), indent=1)
     for v in args.variants.split(","):
+        if v in out["variants"]:
+            continue
         ids = torch.from_numpy(np.concatenate([td.ids for td in tds]).astype(np.int16))
         allowed = torch.from_numpy(np.concatenate([allowed_mask(td.y[td.train_idx], td.bc[td.train_idx], v) for td in tds]))
         calib = ids[torch.randperm(len(ids), generator=torch.Generator().manual_seed(1))[:200_000]]
@@ -114,8 +150,11 @@ def main():
         open(os.path.join(d, f"model_{v}.bin"), "wb").write(blob)
         for n, c in zip(names, conts):
             open(os.path.join(d, f"{n}_{v}.bin"), "wb").write(c)
+        json.dump(out, open(part, "w"), indent=1)
     with open(os.path.join(ROOT, "results", f"joint_{args.pieces}.json"), "w") as f:
         json.dump(out, f, indent=1)
+    if os.path.exists(part):
+        os.remove(part)
 
 
 if __name__ == "__main__":

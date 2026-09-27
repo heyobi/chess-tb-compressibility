@@ -107,6 +107,21 @@ Pooled = sum over the tables of that piece count; median = median of per-table r
 | KQRvKR | 134,700,370 | 273.3 | 2.06 | 12.1 | 3.39 | 0.701 | 3.4 | 0.616 | (256, [512, 256]) 4b, 366,853 p. | 0.0343 | yes |
 | KQRBvK | 148,512,767 | 274.1 | 2.07 | 1.83 | 0.65 | 2.07 | 1.83 | 0.65 | (8, []) 8b, 3,253 p. | 0.0313 | yes |
 
+## Effect of the move-generator features (same tables, MLP + exceptions, ratio to Syzygy)
+
+| table | pieces | (a) with | (a) without | (b) with | (b) without |
+|---|---:|---:|---:|---:|---:|
+| KRvK | 3 | 1.8 | 1.65 | 1.92 | 1.81 |
+| KQvK | 3 | 1.28 | 1.71 | 1.19 | 1.67 |
+| KPvK | 3 | 0.542 | 0.571 | 0.562 | 0.562 |
+| KQQvK | 4 | 0.0459 | 1.64 | 0.0459 | 1.64 |
+| KBNvK | 4 | 1.41 | 2.64 | 1.36 | 1.69 |
+| KQvKR | 4 | 1.06 | 1.73 | 0.954 | 1.2 |
+| KRvKP | 4 | 0.743 | 0.901 | 0.638 | 0.709 |
+| KPvKP | 4 | 0.47 | 0.519 | 0.455 | 0.466 |
+| KQRvKR | 5 | 2.19 | 2.06 | 0.655 | 0.701 |
+| KQRBvK | 5 | 0.00342 | 2.07 | 0.00342 | 2.07 |
+
 ## Joint model per piece count (one MLP for all tables)
 
 | pieces | tables | Syzygy KB | variant | MLP arch | bits | model KB | exceptions KB | total / Syzygy | verified |

@@ -75,6 +75,19 @@ def main():
         rr = load(d)
         if rr:
             md += ["", f"## {title}", ""] + by_pieces(rr, ("mlp", "tree", "const", "xz9e")) + ["", ""] + per_table(rr)
+    abl = {r["table"]: r for r in load("ablation_nomovegen")}
+    main_rows = {r["table"]: r for r in rows}
+    if abl:
+        md += ["", "## Effect of the move-generator features (same tables, MLP + exceptions, ratio to Syzygy)", "",
+               "| table | pieces | (a) with | (a) without | (b) with | (b) without |", "|---|---:|---:|---:|---:|---:|"]
+        for t in sorted(abl, key=lambda t: (abl[t]["pieces"], abl[t]["syzygy_rtbw_bytes"])):
+            if t not in main_rows:
+                continue
+            s_ = abl[t]["syzygy_rtbw_bytes"]
+            c = [main_rows[t]["variants"][v]["mlp"]["total_bytes"] / s_ for v in ("a",)] + \
+                [abl[t]["variants"]["a"]["mlp"]["total_bytes"] / s_] + \
+                [main_rows[t]["variants"]["b"]["mlp"]["total_bytes"] / s_, abl[t]["variants"]["b"]["mlp"]["total_bytes"] / s_]
+            md.append(f"| {t} | {abl[t]['pieces']} | " + " | ".join(f"{x:.3g}" for x in c) + " |")
     joints = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(RES, "joint_*.json")))]
     if joints:
         md += ["", "## Joint model per piece count (one MLP for all tables)", "",
@@ -88,6 +101,13 @@ def main():
                           f"{jr['total_bytes'] / j['syzygy_bytes']:.3g} | "
                           f"{'yes' if jr['verified_mismatches'] == 0 else 'NO'} |")
     open(os.path.join(RES, "report.md"), "w").write("\n".join(md) + "\n")
+    # refresh the generated block of the README
+    rp = os.path.join(ROOT, "README.md")
+    txt = open(rp).read()
+    b, e = "<!-- RESULTS:BEGIN -->", "<!-- RESULTS:END -->"
+    if b in txt and e in txt:
+        txt = txt[:txt.index(b) + len(b)] + "\n" + "\n".join(md).replace("## ", "### ") + "\n" + txt[txt.index(e):]
+        open(rp, "w").write(txt)
     print("\n".join(md))
 
 
