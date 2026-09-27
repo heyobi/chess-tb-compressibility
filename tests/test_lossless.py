@@ -65,7 +65,9 @@ def test_table_lossless(path):
         for fn in ("valid.bits", "feat.u8"):
             assert md5(os.path.join(tmp, fn)) == md5(os.path.join(DATA_DIR, name, fn)), fn
     nomg = res.get("no_movegen", False)
-    td = mdl.TableData(name, train_max=1, classes=res.get("classes", 5), no_movegen=nomg)
+    large = res.get("mode") == "large"
+    td = mdl.TableData(name, train_max=1, classes=res.get("classes", 5), no_movegen=nomg,
+                       full=False if large else None)
     encdir = os.path.join(td.t.dir, ("enc" if res.get("classes", 5) == 5 else "enc3") + ("_nomg" if nomg else ""))
     X = None
     for v, vr in res["variants"].items():
@@ -75,6 +77,8 @@ def test_table_lossless(path):
             assert len(cont) == vr[method]["total_bytes"]
             if method == "const":
                 bad = mdl.verify_const(td, cont, v)
+            elif method == "tree" and large:  # chunked: the feature matrix would not fit in RAM
+                bad = verify_tree_chunked(td, cont, v)
             elif method == "tree":
                 if X is None:
                     from baselines import tree as treebase
@@ -85,3 +89,16 @@ def test_table_lossless(path):
             else:
                 bad = mdl.verify_mlp(td, cont, v)
             assert bad == 0, f"{name} {method} variant {v}: {bad} mismatches"
+
+
+def verify_tree_chunked(td, cont, v):
+    from baselines import tree as treebase
+    t = td.t
+
+    def pf(blob):
+        ft = treebase.FlatTree(blob)
+        p = np.empty(td.n, np.uint8)
+        for s, e, sq, stm in t.iter_chunks():
+            p[s:e] = ft.predict(treebase.numeric_features(t, sq, stm, t.feat[s:e]))
+        return p, p * 5 + p
+    return int((mdl.decode_container(cont, pf, td.bc, v) != td.y).sum())
