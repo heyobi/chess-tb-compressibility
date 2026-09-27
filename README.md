@@ -47,13 +47,14 @@ see below) and a bit-exact lossless verification of every reported number.
 * **MLP + exceptions is smaller than Syzygy in aggregate at every piece count
   measured, and the ratio does not get worse from 4 to 5 pieces.** Pooled over
   the tables of a piece count (sum of our bytes / sum of Syzygy bytes), strict
-  variant (a): 0.69 (3 pieces) → 0.77 (4) → 0.74 (5); Syzygy-style variant
-  (b): 0.71 → 0.65 → 0.65 (see the table below for the final 5-piece value).
+  variant (a): 0.69 (3 pieces) → 0.77 (4) → 0.77 (5); Syzygy-style variant
+  (b): 0.71 → 0.65 → 0.67. Medians over tables: (a) 1.8 → 0.89 → 0.83,
+  (b) 1.9 → 0.53 → 0.68.
 * **The spread between tables is huge** (from 0.003 to 5.6 × Syzygy). Tiny
   or trivial tables are dominated by the fixed model cost (≈ 300–1000 bytes;
   Syzygy stores KBvK in 80 bytes), trivial "one side always wins" tables
   collapse to almost nothing, and the hard, large tables sit around 0.5–1.2.
-* **Decision trees scale badly**: 0.41 → 0.87 → 1.3 × Syzygy (pooled, a).
+* **Decision trees scale badly**: 0.41 → 0.87 → 1.35 × Syzygy (pooled, a).
   Generic compressors on the raw label array stay around 1× (xz) or worse.
 * **The 5-piece numbers are an upper bound for this model family.** On every
   hard 5-piece table the largest model we could afford on 4 CPU cores
@@ -105,8 +106,8 @@ Pooled = sum over the tables of that piece count; median = median of per-table r
 | 3 | b | 5 | 8.3 | 0.709 / 1.92 | 0.409 / 0.275 | 1.61 / 1.58 | 0.671 / 0.237 | 0.723 / 1.06 | yes |
 | 4 | a | 30 | 1,224.8 | 0.774 / 0.894 | 0.871 / 0.727 | 4.37 / 6.16 | 1.44 / 1.71 | 1.25 / 1.43 | yes |
 | 4 | b | 30 | 1,224.8 | 0.652 / 0.532 | 0.852 / 0.69 | 3.69 / 4.14 | 1.19 / 1.07 | 1.03 / 0.939 | yes |
-| 5 | a | 9 | 65,099.4 | 0.744 / 0.781 | 1.32 / 1.18 | 2.76 / 3.86 | 1.2 / 1.3 | 0.931 / 0.958 | yes |
-| 5 | b | 9 | 65,099.4 | 0.65 / 0.655 | 1.21 / 1.09 | 2.26 / 1.81 | 0.952 / 0.859 | 0.758 / 0.734 | yes |
+| 5 | a | 10 | 81,094.1 | 0.771 / 0.831 | 1.35 / 1.31 | 2.76 / 3.31 | 1.16 / 1.22 | 0.904 / 0.882 | yes |
+| 5 | b | 10 | 81,094.1 | 0.673 / 0.676 | 1.2 / 1.13 | 2.2 / 1.89 | 0.905 / 0.851 | 0.725 / 0.692 | yes |
 
 ### Per table (ratios to Syzygy)
 
@@ -155,6 +156,7 @@ Pooled = sum over the tables of that piece count; median = median of per-table r
 | KPPvKR | 199,951,960 | 8,856.1 | 0.629 | 0.865 | 0.486 | 0.549 | 0.816 | 0.415 | (256, [512, 256]) 8b, 375,045 p. | 0.2281 | yes |
 | KBNvKP | 544,972,696 | 9,908.5 | 1.04 | 1.96 | 1.06 | 0.932 | 1.9 | 0.974 | (256, [512, 256]) 8b, 395,525 p. | 0.1545 | yes |
 | KBPvKB | 527,533,761 | 14,932.1 | 0.583 | 1.15 | 0.806 | 0.471 | 1.07 | 0.734 | (256, [512, 256]) 8b, 395,525 p. | 0.1351 | yes |
+| KRPvKR | 483,352,468 | 15,994.7 | 0.882 | 1.43 | 0.795 | 0.768 | 1.17 | 0.59 | (256, [512, 256]) 8b, 395,525 p. | 0.2390 | yes |
 | KQPvKQ | 404,512,069 | 19,925.4 | 0.781 | 1.18 | 0.958 | 0.696 | 1.01 | 0.734 | (256, [512, 256]) 8b, 395,525 p. | 0.3150 | yes |
 
 ### 3-class labels (loss / draw / win, 50-move rule applied)
@@ -225,6 +227,8 @@ Pooled = sum over the tables of that piece count; median = median of per-table r
 |---|---:|---:|---|---|---:|---:|---:|---:|---|
 | 3 | 5 | 8.3 | a | (16, [16]) | 4 | 4.0 | 3.0 | 0.848 | yes |
 | 3 | 5 | 8.3 | b | (16, [16]) | 4 | 4.0 | 3.0 | 0.852 | yes |
+| 4 | 30 | 1,224.8 | a | (256, [512, 256]) | 4 | 201.4 | 1,385.4 | 1.3 | yes |
+| 4 | 30 | 1,224.8 | b | (128, [256, 128]) | 4 | 78.3 | 1,349.6 | 1.17 | yes |
 <!-- RESULTS:END -->
 
 ## Where the exceptions are (4-piece tables, best MLP, variant a)
@@ -276,9 +280,10 @@ Example exceptions (FEN, true value → model), more in the file above:
   3-piece tables and 4 hard 4-piece tables (section above); the main runs use
   the 5-class labels, which contain both 3-class views.
 * **Joint model**: one MLP per piece count for all tables of that count (3
-  and 4 pieces). It is worse than per-table models (e.g. 3 pieces 0.85 vs
-  0.69), because it must pay for every table's exceptions with one shared
-  model; see the table above.
+  and 4 pieces). It is worse than per-table models (3 pieces: 0.85 vs 0.69;
+  4 pieces: 1.30 vs 0.77 in (a), 1.17 vs 0.65 in (b)): one shared ~200K-parameter
+  model cannot fit 30 different endgames as well as 30 specialised ones, and
+  the saved per-table model bytes are small next to the extra exceptions.
 
 ## Limitations (please read before quoting a number)
 
